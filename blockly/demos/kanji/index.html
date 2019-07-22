@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>漢字描画</title>
+  <link rel="icon" href="kanji.ico" />
+  <script src="../../blockly_compressed.js"></script>
+  <script src="../../blocks_compressed.js"></script>
+  <script src="../../javascript_compressed.js"></script>
+  <script src="../../msg/js/ja.js"></script>
+  
+  <script src="../../blocks/kanji/line_block.js"></script>
+  <script src="../../blocks/kanji/draw_block.js"></script>
+  <script src="../../generators/javascript/kanji/draw.js"></script>
+  
+  <script src="../../blocks/kanji/from_to_draw_block.js"></script>
+  <script src="../../blocks/kanji/from_draw_block.js"></script>
+  <script src="../../generators/javascript/kanji/from_to_draw.js"></script>
+
+  <script src="../../blocks/kanji/place_block.js"></script>
+  <script src="../../generators/javascript/kanji/place.js"></script>
+
+  <script src="../../blocks/kanji/draw_direction_block.js"></script>
+  <script src="../../blocks/kanji/long_line_block.js"></script>
+  <script src="../../blocks/kanji/short_line_block.js"></script>
+  <script src="../../blocks/kanji/little_block.js"></script>
+  <script src="../../blocks/kanji/absolute_place_block.js"></script>
+  <script src="../../generators/javascript/kanji/absolute_place.js"></script>
+  <script src="../../blocks/kanji/draw_direction2_block.js"></script>
+
+<!-------------------------------------------------------------------------------->
+
+
+
+<!-------------------------------------------------------------------------------->
+
+
+
+  <style>
+    body{
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1{
+      font-weight: normal;
+      font-size: 150%;
+    }
+    canvas{
+      border: 1px solid silver;
+    }
+  </style>
+</head>
+<body>
+  <h1><img src="kanji.ico">字描画</h1>
+
+  <p>
+    <button onclick="showCode()">コード表示(javascript)</button>
+    <button onclick="runCode()">実行</button>
+  </p>
+
+  <table>
+    <tr>
+      <td>
+        <div id="blocklyDiv" style="height: 400px; width: 1000px;"></div>
+
+        <xml id="toolbox" style="display: none">
+
+          <category name="線">
+            <block type="line"></block>
+            <block type="long_line"></block>
+            <block type="short_line"></block>
+          </category>
+
+          <category name="場所">
+            <block type="absolute_place"></block>
+            <block type="place"></block>
+            <block type="little"></blick>
+
+          </category>
+
+          <category name="動作">
+            <block type="draw"></block>
+            <block type="from_draw"></block>
+            <block type="from_to_draw"></block>
+            <block type="draw_direction"></block>
+            <block type="draw_direction2"></block>
+          </category>
+        </xml>
+      </td>
+      <td>
+        <canvas id="canvas" width="400px" height="400px">
+          図形を表示するには、canvasタグをサポートしたブラウザが必要です。
+        </canvas>
+      </td>
+    </tr>
+  </table>
+
+  <!--<p>生成されたソースコード</p>
+  <p id="program" />
+  -->
+  <script>
+    var demoWorkspace = Blockly.inject('blocklyDiv',{media: '../../media/',toolbox: document.getElementById('toolbox')});
+    
+    function showCode(){
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      if (code == ""){
+        alert("ブロックがありません");
+      }else{
+        //document.getElementById("program").innerHTML = code;
+        alert(code);
+      }
+    }
+
+    function runCode(){
+      // Generate JavaScript code and run it.
+      //showCode();
+      window.LoopTrap = 1000;
+      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      clearCanvas();
+      try{
+        eval(code);
+      }catch(e){
+        alert("エラーです.\n(" + e + ")");
+      }
+    } 
+
+    function drawLine(fromX,fromY,toX,toY){
+      if (arguments.length !== 4){
+        alert("[IllegalArgument:引数不正]エラーです.\n(ブロックに穴があります)");
+      }
+
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+      
+      context.beginPath();
+      context.moveTo(fromX,fromY);
+      context.lineTo(toX,toY);
+      context.stroke();
+    }
+
+    function clearCanvas(){
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+
+      context.clearRect(0,0,400,400);
+    }
+  </script>
+</body>
+</html>

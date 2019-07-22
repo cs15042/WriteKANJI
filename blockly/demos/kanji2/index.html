@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>漢字描画</title>
+  <link rel="icon" href="kanji.ico" />
+  <script src="../../blockly_compressed.js"></script>
+  <script src="../../blocks_compressed.js"></script>
+  <script src="../../javascript_compressed.js"></script>
+  <script src="../../msg/js/ja.js"></script>
+
+  <script src="../../blocks/kanji/0605/absolute_block.js"></script>
+  <script src="../../blocks/kanji/0605/absolute_direction_block.js"></script>
+  <script src="../../blocks/kanji/0605/bubun_block.js"></script>
+  <script src="../../blocks/kanji/0605/draw_block.js"></script>
+  <script src="../../blocks/kanji/0605/hanbun_block.js"></script>
+  <script src="../../blocks/kanji/0605/iru_block.js"></script>
+  <script src="../../blocks/kanji/0605/kaku_block.js"></script>
+  <script src="../../blocks/kanji/0605/kara_block.js"></script>
+  <script src="../../blocks/kanji/0605/kasanaru_block.js"></script>
+  <script src="../../blocks/kanji/0605/kono_block.js"></script>
+  <script src="../../blocks/kanji/0605/kurai_block.js"></script>
+  <script src="../../blocks/kanji/0605/length_block.js"></script>
+  <script src="../../blocks/kanji/0605/line_block.js"></script>
+  <script src="../../blocks/kanji/0605/majiwaru_block.js"></script>
+  <script src="../../blocks/kanji/0605/mukatte_block.js"></script>
+  <script src="../../blocks/kanji/0605/nai_block.js"></script>
+  <script src="../../blocks/kanji/0605/onaji_block.js"></script>
+  <script src="../../blocks/kanji/0605/sukoshi_block.js"></script>
+  <script src="../../blocks/kanji/0605/suru_block.js"></script>
+  <script src="../../blocks/kanji/0605/tokoro_block.js"></script>
+  <script src="../../blocks/kanji/0605/tooru_block.js"></script>
+  <script src="../../blocks/kanji/0605/yori_block.js"></script>
+  <script src="../../blocks/kanji/0605/you_block.js"></script>
+
+
+
+
+  <style>
+    body{
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1{
+      font-weight: normal;
+      font-size: 150%;
+    }
+    canvas{
+      border: 1px solid silver;
+    }
+  </style>
+</head>
+<body>
+  <h1><img src="kanji.ico">字描画</h1>
+
+  <p>
+    <button onclick="showCode()">コード表示(javascript)</button>
+    <button onclick="runCode()">実行</button>
+  </p>
+
+  <table>
+    <tr>
+      <td>
+        <div id="blocklyDiv" style="height: 400px; width: 1000px;"></div>
+
+        <xml id="toolbox" style="display: none">
+
+          <category name="カテゴリ１">
+            <block type="absolute"></block>
+            <block type="absolute_direction"></block>
+            <block type="bubun"></block>
+            <block type="draw"></block>
+            <block type="hanbun"></block>
+            <block type="iru"></block>
+            <block type="kaku"></block>
+            <block type="kara"></block>
+            <block type="kasanaru"></block>
+            <block type="kono"></block>
+            <block type="kurai"></block>
+            <block type="length"></block>
+            <block type="line"></block>
+            <block type="majiwaru"></block>
+            <block type="mukatte"></block>
+            <block type="nai"></block>
+            <block type="onaji"></block>
+            <block type="sukoshi"></block>
+            <block type="suru"></block>
+            <block type="tokoro"></block>
+            <block type="tooru"></block>
+            <block type="yori"></block>
+            <block type="you"></block>
+
+          </category>
+
+        </xml>
+      </td>
+      <td>
+        <canvas id="canvas" width="400px" height="400px">
+          図形を表示するには、canvasタグをサポートしたブラウザが必要です。
+        </canvas>
+      </td>
+    </tr>
+  </table>
+
+  <!--<p>生成されたソースコード</p>
+  <p id="program" />
+  -->
+  <script>
+    var demoWorkspace = Blockly.inject('blocklyDiv',{media: '../../media/',toolbox: document.getElementById('toolbox')});
+    
+    function showCode(){
+      // Generate JavaScript code and display it.
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      if (code == ""){
+        alert("ブロックがありません");
+      }else{
+        //document.getElementById("program").innerHTML = code;
+        alert(code);
+      }
+    }
+
+    function runCode(){
+      // Generate JavaScript code and run it.
+      //showCode();
+      window.LoopTrap = 1000;
+      Blockly.JavaScript.INFINITE_LOOP_TRAP =
+          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+      var code = Blockly.JavaScript.workspaceToCode(demoWorkspace);
+      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+      clearCanvas();
+      try{
+        eval(code);
+      }catch(e){
+        alert("エラーです.\n(" + e + ")");
+      }
+    } 
+
+    function drawLine(fromX,fromY,toX,toY){
+      if (arguments.length !== 4){
+        alert("[IllegalArgument:引数不正]エラーです.\n(ブロックに穴があります)");
+      }
+
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+      
+      context.beginPath();
+      context.moveTo(fromX,fromY);
+      context.lineTo(toX,toY);
+      context.stroke();
+    }
+
+    function clearCanvas(){
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+
+      context.clearRect(0,0,400,400);
+    }
+  </script>
+</body>
+</html>

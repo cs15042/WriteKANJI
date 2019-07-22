@@ -5,7 +5,7 @@ Blockly.Blocks['stroked'] = {
         .appendField("画目の");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(280);
+    this.setColour(0);
  this.setTooltip("");
  this.setHelpUrl("");
   }

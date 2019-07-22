@@ -12,12 +12,6 @@ Blockly.JavaScript['drawLine'] = function(block) {
   var same = 0;
   var rand = Math.random();
 
-  coordinate = value_option.split(",");
-  coordinate2 = value_option2.split(",");
-
-  console.log("argument1:"+value_option);
-  console.log("argument2:"+value_option2);
-
   if(value_option2 != ""){//AND条件がある場合
     draw(true);
   }else{//無い場合
@@ -50,20 +44,8 @@ Blockly.JavaScript['drawLine'] = function(block) {
     return;
   }
 
-  function cmpSameCheck(coordinate){
-  	for(var i=0; i<10; i++){
-  		if(coordinate[i] == "cmp"){
-  			cmp = i+1;
-  		}
-  		if(coordinate[i] == "same"){
-  			same = i+1;
-  		}
-  	}
-    return;
-  }
-
-  function defineLength(coordinate){
-    cmpSameCheck(coordinate);
+  function defineLength(){
+    cmpSameCheck();
     switch(lineType){
       case "horizontal_line":
       case "vertical_line":
@@ -89,6 +71,20 @@ Blockly.JavaScript['drawLine'] = function(block) {
     if(same>0){
       length = Number(coordinate[same]);
     }    
+  }
+
+  function cmpSameCheck(){
+    if(coordinate[3] == "cmp"){
+      cmp = 4;
+    }else if(coordinate[5] == "cmp"){
+      cmp = 6;
+    }
+    if(coordinate[3] == "same"){
+      same = 4;
+    }else if(coordinate[5] == "same"){
+      same = 6;
+    }
+    return;
   }
 
   function atThrough(){
@@ -163,7 +159,36 @@ Blockly.JavaScript['drawLine'] = function(block) {
     return fx+","+fy+","+tx+","+ty;
   }
 
-  function noOption(){//if no target option or no option cmp and same
+  function noOption(){//if no target option or no option cmp
+    if(coordinate[0] == "cmp"){
+        cmp = 1;
+    }else if(coordinate[0] == "same"){
+        same = 1;
+    }
+    switch(lineType){
+      case "horizontal_line":
+      case "vertical_line":
+        length = 150 + (rand*100);
+        break;
+      case "long_horizontal_line":
+      case "long_vertical_line":
+        if(cmp == 1){
+          length = Number(coordinate[cmp])*1.3;
+        }else{
+          length = 250 + (rand*100);
+        }
+        break;
+      case "short_horizontal_line":
+      case "short_vertical_line":
+        if(cmp == 1){
+          length = Number(coordinate[cmp])*0.7;
+        }else{
+          length = 50 + (rand*100);
+        }
+    }
+    if(same == 1){
+      length = Number(coordinate[same]);
+    }
     switch(lineType){
       case "horizontal_line":
       case "long_horizontal_line":
@@ -187,11 +212,12 @@ Blockly.JavaScript['drawLine'] = function(block) {
 
   function addCondition(){//追加条件があるとき条件に合わせて線を調整する関数//未完成
     var line;
-    defineLength(coordinate2);//線の長さの決定
-    if(coordinate2[0] != "cmp" && coordinate2[0] != "same"){
-      if(coordinate2[0] == "at" || coordinate2[0] == "through"){//～に，通るように，通らないように
+    coordinate2 = value_option2.split(",");
+    if(coordinate[0] != "cmp" && coordinate[0] != "same"){
+      defineLength();//線の長さの決定
+      if(coordinate[0] == "at" || coordinate[0] == "through"){//～に，通るように，通らないように
         line = atThroughAdd();
-      }else if(coordinate2[0] == "d"){//～に向かって
+      }else if(coordinate[0] == "d"){//～に向かって
         line = towardsAdd();
       }else{//～から～まで
         line = fromToAdd();
@@ -199,6 +225,8 @@ Blockly.JavaScript['drawLine'] = function(block) {
     }else{//長さの変更のみの場合
       line = fx+","+fy+","+tx+","+ty;
     }
+
+
     code = "drawLine("+line+");\n";
     drawLine(line);
     return;
@@ -207,8 +235,9 @@ Blockly.JavaScript['drawLine'] = function(block) {
   function draw(add){//線を描く本体関数
     var line;
     defineLineType();//線の種類の決定
-    defineLength(coordinate);//線の長さの決定
+    coordinate = value_option.split(",");
     if(value_option != "" && coordinate[0] != "cmp" && coordinate[0] != "same"){
+      defineLength();//線の長さの決定
       if(coordinate[0] == "at" || coordinate[0] == "through"){//～に，通るように，通らないように
         line = atThrough();
       }else if(coordinate[0] == "d"){//～に向かって
@@ -216,7 +245,7 @@ Blockly.JavaScript['drawLine'] = function(block) {
       }else{//～から～まで
         line = fromTo();
       }
-    }else{//長さ以外何も指定が無い場合
+    }else{//何も指定が無い場合
       line = noOption();
     }
     if(add){

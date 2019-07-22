@@ -81,11 +81,11 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.IOS_PROCEDURES_ALLOW_STATEMENTS = "Allow statements";  // untranslated
 /** @export */ Blockly.Msg.IOS_PROCEDURES_DUPLICATE_INPUTS_ERROR = "This function has duplicate inputs.";  // untranslated
 /** @export */ Blockly.Msg.IOS_PROCEDURES_INPUTS = "INPUTS";  // untranslated
-/** @export */ Blockly.Msg.IOS_VARIABLES_ADD_BUTTON = "Dodaj";
-/** @export */ Blockly.Msg.IOS_VARIABLES_ADD_VARIABLE = "+ Dodaj spremenljivko";
-/** @export */ Blockly.Msg.IOS_VARIABLES_DELETE_BUTTON = "Izbriši";
+/** @export */ Blockly.Msg.IOS_VARIABLES_ADD_BUTTON = "Add";  // untranslated
+/** @export */ Blockly.Msg.IOS_VARIABLES_ADD_VARIABLE = "+ Add Variable";  // untranslated
+/** @export */ Blockly.Msg.IOS_VARIABLES_DELETE_BUTTON = "Delete";  // untranslated
 /** @export */ Blockly.Msg.IOS_VARIABLES_EMPTY_NAME_ERROR = "You can't use an empty variable name.";  // untranslated
-/** @export */ Blockly.Msg.IOS_VARIABLES_RENAME_BUTTON = "Preimenuj";
+/** @export */ Blockly.Msg.IOS_VARIABLES_RENAME_BUTTON = "Rename";  // untranslated
 /** @export */ Blockly.Msg.IOS_VARIABLES_VARIABLE_NAME = "Ime spremenljivke";
 /** @export */ Blockly.Msg.LISTS_CREATE_EMPTY_HELPURL = "https://github.com/google/blockly/wiki/Lists#create-empty-list";
 /** @export */ Blockly.Msg.LISTS_CREATE_EMPTY_TITLE = "ustvari prazen seznam";
@@ -310,12 +310,13 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.PROCEDURES_MUTATORARG_TOOLTIP = "Funkciji doda vnos.";
 /** @export */ Blockly.Msg.PROCEDURES_MUTATORCONTAINER_TITLE = "vnosi";
 /** @export */ Blockly.Msg.PROCEDURES_MUTATORCONTAINER_TOOLTIP = "Doda, odstrani ali spremeni vrstni red vnosov te funkcije.";
+/** @export */ Blockly.Msg.PROCEDURE_ALREADY_EXISTS = "A procedure named '%1' already exists.";  // untranslated
 /** @export */ Blockly.Msg.REDO = "Ponovi";
 /** @export */ Blockly.Msg.REMOVE_COMMENT = "Odstrani komentar";
 /** @export */ Blockly.Msg.RENAME_VARIABLE = "Preimenuj spremenljivko...";
 /** @export */ Blockly.Msg.RENAME_VARIABLE_TITLE = "Preimenuj vse spremenljivke '%1' v:";
 /** @export */ Blockly.Msg.TEXT_APPEND_HELPURL = "https://github.com/google/blockly/wiki/Text#text-modification";
-/** @export */ Blockly.Msg.TEXT_APPEND_TITLE = "k %1 dodaj besedilo %2";
+/** @export */ Blockly.Msg.TEXT_APPEND_TITLE = "to %1 append text %2";  // untranslated
 /** @export */ Blockly.Msg.TEXT_APPEND_TOOLTIP = "Doda besedilo k spremenljivki '%1'.";
 /** @export */ Blockly.Msg.TEXT_CHANGECASE_HELPURL = "https://github.com/google/blockly/wiki/Text#adjusting-text-case";
 /** @export */ Blockly.Msg.TEXT_CHANGECASE_OPERATOR_LOWERCASE = "v male črke";
@@ -350,7 +351,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.TEXT_INDEXOF_HELPURL = "https://github.com/google/blockly/wiki/Text#finding-text";
 /** @export */ Blockly.Msg.TEXT_INDEXOF_OPERATOR_FIRST = "najdi prvo pojavitev besedila";
 /** @export */ Blockly.Msg.TEXT_INDEXOF_OPERATOR_LAST = "najdi zadnjo pojavitev besedila";
-/** @export */ Blockly.Msg.TEXT_INDEXOF_TITLE = "v besedilu %1 %2 %3";
+/** @export */ Blockly.Msg.TEXT_INDEXOF_TITLE = "in text %1 %2 %3";  // untranslated
 /** @export */ Blockly.Msg.TEXT_INDEXOF_TOOLTIP = "Vrne mesto (indeks) prve/zadnje pojavitve drugega besedila v prvem besedilu. Če besedila ne najde, vrne %1.";
 /** @export */ Blockly.Msg.TEXT_ISEMPTY_HELPURL = "https://github.com/google/blockly/wiki/Text#checking-for-empty-text";
 /** @export */ Blockly.Msg.TEXT_ISEMPTY_TITLE = "%1 je prazno";
@@ -394,7 +395,6 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.VARIABLES_SET_TOOLTIP = "Nastavi, da je vrednost spremenljivke enaka vnosu.";
 /** @export */ Blockly.Msg.VARIABLE_ALREADY_EXISTS = "Spremenljivka »%1« že obstaja.";
 /** @export */ Blockly.Msg.VARIABLE_ALREADY_EXISTS_FOR_ANOTHER_TYPE = "A variable named '%1' already exists for another variable of type '%2'.";  // untranslated
-/** @export */ Blockly.Msg.MATH_CHANGE_TITLE_ITEM = Blockly.Msg.VARIABLES_DEFAULT_NAME;
 /** @export */ Blockly.Msg.PROCEDURES_DEFRETURN_TITLE = Blockly.Msg.PROCEDURES_DEFNORETURN_TITLE;
 /** @export */ Blockly.Msg.CONTROLS_IF_IF_TITLE_IF = Blockly.Msg.CONTROLS_IF_MSG_IF;
 /** @export */ Blockly.Msg.CONTROLS_WHILEUNTIL_INPUT_DO = Blockly.Msg.CONTROLS_REPEAT_INPUT_DO;
@@ -403,6 +403,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.PROCEDURES_DEFRETURN_PROCEDURE = Blockly.Msg.PROCEDURES_DEFNORETURN_PROCEDURE;
 /** @export */ Blockly.Msg.LISTS_GET_SUBLIST_INPUT_IN_LIST = Blockly.Msg.LISTS_INLIST;
 /** @export */ Blockly.Msg.LISTS_GET_INDEX_INPUT_IN_LIST = Blockly.Msg.LISTS_INLIST;
+/** @export */ Blockly.Msg.MATH_CHANGE_TITLE_ITEM = Blockly.Msg.VARIABLES_DEFAULT_NAME;
 /** @export */ Blockly.Msg.PROCEDURES_DEFRETURN_DO = Blockly.Msg.PROCEDURES_DEFNORETURN_DO;
 /** @export */ Blockly.Msg.CONTROLS_IF_ELSEIF_TITLE_ELSEIF = Blockly.Msg.CONTROLS_IF_MSG_ELSEIF;
 /** @export */ Blockly.Msg.LISTS_GET_INDEX_HELPURL = Blockly.Msg.LISTS_INDEX_OF_HELPURL;

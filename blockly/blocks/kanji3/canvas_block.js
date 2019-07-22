@@ -3,7 +3,7 @@ Blockly.Blocks['canvas'] = {
     this.appendDummyInput()
         .appendField("キャンバスの");
     this.setOutput(true, null);
-    this.setColour(280);
+    this.setColour(0);
  this.setTooltip("");
  this.setHelpUrl("");
   }

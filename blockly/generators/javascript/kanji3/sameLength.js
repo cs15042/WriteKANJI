@@ -36,5 +36,6 @@ Blockly.JavaScript['sameLength'] = function(block) {
   }else{
 	code = value_target + ",same," + length;
   }
+  console.log(code); 
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

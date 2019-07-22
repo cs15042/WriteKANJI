@@ -6,7 +6,7 @@ Blockly.Blocks['at'] = {
         .appendField("に");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(120);
+    this.setColour(90);
  this.setTooltip("");
  this.setHelpUrl("");
   }

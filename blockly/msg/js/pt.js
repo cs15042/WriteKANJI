@@ -39,7 +39,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.CONTROLS_FOREACH_TITLE = "para cada item %1 na lista %2";
 /** @export */ Blockly.Msg.CONTROLS_FOREACH_TOOLTIP = "Para cada item numa lista, define a variável \"%1\" para o item e então faz algumas instruções.";
 /** @export */ Blockly.Msg.CONTROLS_FOR_HELPURL = "https://github.com/google/blockly/wiki/Loops#count-with";  // untranslated
-/** @export */ Blockly.Msg.CONTROLS_FOR_TITLE = "contar com %1 de %2 até %3 por %4";
+/** @export */ Blockly.Msg.CONTROLS_FOR_TITLE = "contar com %1 de %2 até %3 de %3 em %4";
 /** @export */ Blockly.Msg.CONTROLS_FOR_TOOLTIP = "Faz com que a variável \"%1\" assuma os valores desde o número inicial até ao número final, contando de acordo com o intervalo especificado e executa os blocos especificados.";
 /** @export */ Blockly.Msg.CONTROLS_IF_ELSEIF_TOOLTIP = "Acrescente uma condição ao bloco se.";
 /** @export */ Blockly.Msg.CONTROLS_IF_ELSE_TOOLTIP = "Acrescente uma condição de excepação final para o bloco se.";
@@ -310,12 +310,13 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.PROCEDURES_MUTATORARG_TOOLTIP = "Adicionar uma entrada para a função.";
 /** @export */ Blockly.Msg.PROCEDURES_MUTATORCONTAINER_TITLE = "entradas";
 /** @export */ Blockly.Msg.PROCEDURES_MUTATORCONTAINER_TOOLTIP = "Adicionar, remover ou reordenar as entradas para esta função.";
+/** @export */ Blockly.Msg.PROCEDURE_ALREADY_EXISTS = "A procedure named '%1' already exists.";  // untranslated
 /** @export */ Blockly.Msg.REDO = "Refazer";
 /** @export */ Blockly.Msg.REMOVE_COMMENT = "Remover Comentário";
 /** @export */ Blockly.Msg.RENAME_VARIABLE = "Renomear variável...";
 /** @export */ Blockly.Msg.RENAME_VARIABLE_TITLE = "Renomear todas as variáveis '%1' para:";
 /** @export */ Blockly.Msg.TEXT_APPEND_HELPURL = "https://github.com/google/blockly/wiki/Text#text-modification";  // untranslated
-/** @export */ Blockly.Msg.TEXT_APPEND_TITLE = "para %1 acrescentar texto %2";
+/** @export */ Blockly.Msg.TEXT_APPEND_TITLE = "to %1 append text %2";  // untranslated
 /** @export */ Blockly.Msg.TEXT_APPEND_TOOLTIP = "Acrescentar um pedaço de texto à variável \"%1\".";
 /** @export */ Blockly.Msg.TEXT_CHANGECASE_HELPURL = "https://github.com/google/blockly/wiki/Text#adjusting-text-case";  // untranslated
 /** @export */ Blockly.Msg.TEXT_CHANGECASE_OPERATOR_LOWERCASE = "para minúsculas";
@@ -350,7 +351,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.TEXT_INDEXOF_HELPURL = "https://github.com/google/blockly/wiki/Text#finding-text";  // untranslated
 /** @export */ Blockly.Msg.TEXT_INDEXOF_OPERATOR_FIRST = "primeira ocorrência do texto";
 /** @export */ Blockly.Msg.TEXT_INDEXOF_OPERATOR_LAST = "última ocorrência do texto";
-/** @export */ Blockly.Msg.TEXT_INDEXOF_TITLE = "no texto %1 %2 %3";
+/** @export */ Blockly.Msg.TEXT_INDEXOF_TITLE = "in text %1 %2 %3";  // untranslated
 /** @export */ Blockly.Msg.TEXT_INDEXOF_TOOLTIP = "Retorna a posição da primeira/última ocorrência do primeiro texto no segundo texto. Retorna %1 se o texto não for encontrado.";
 /** @export */ Blockly.Msg.TEXT_ISEMPTY_HELPURL = "https://github.com/google/blockly/wiki/Text#checking-for-empty-text";  // untranslated
 /** @export */ Blockly.Msg.TEXT_ISEMPTY_TITLE = "%1 está vazio";
@@ -394,7 +395,6 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.VARIABLES_SET_TOOLTIP = "Define esta variável para o valor inserido.";
 /** @export */ Blockly.Msg.VARIABLE_ALREADY_EXISTS = "Já existe uma variável com o nome de '%1'.";
 /** @export */ Blockly.Msg.VARIABLE_ALREADY_EXISTS_FOR_ANOTHER_TYPE = "A variable named '%1' already exists for another variable of type '%2'.";  // untranslated
-/** @export */ Blockly.Msg.MATH_CHANGE_TITLE_ITEM = Blockly.Msg.VARIABLES_DEFAULT_NAME;
 /** @export */ Blockly.Msg.PROCEDURES_DEFRETURN_TITLE = Blockly.Msg.PROCEDURES_DEFNORETURN_TITLE;
 /** @export */ Blockly.Msg.CONTROLS_IF_IF_TITLE_IF = Blockly.Msg.CONTROLS_IF_MSG_IF;
 /** @export */ Blockly.Msg.CONTROLS_WHILEUNTIL_INPUT_DO = Blockly.Msg.CONTROLS_REPEAT_INPUT_DO;
@@ -403,6 +403,7 @@ goog.require('Blockly.Msg');
 /** @export */ Blockly.Msg.PROCEDURES_DEFRETURN_PROCEDURE = Blockly.Msg.PROCEDURES_DEFNORETURN_PROCEDURE;
 /** @export */ Blockly.Msg.LISTS_GET_SUBLIST_INPUT_IN_LIST = Blockly.Msg.LISTS_INLIST;
 /** @export */ Blockly.Msg.LISTS_GET_INDEX_INPUT_IN_LIST = Blockly.Msg.LISTS_INLIST;
+/** @export */ Blockly.Msg.MATH_CHANGE_TITLE_ITEM = Blockly.Msg.VARIABLES_DEFAULT_NAME;
 /** @export */ Blockly.Msg.PROCEDURES_DEFRETURN_DO = Blockly.Msg.PROCEDURES_DEFNORETURN_DO;
 /** @export */ Blockly.Msg.CONTROLS_IF_ELSEIF_TITLE_ELSEIF = Blockly.Msg.CONTROLS_IF_MSG_ELSEIF;
 /** @export */ Blockly.Msg.LISTS_GET_INDEX_HELPURL = Blockly.Msg.LISTS_INDEX_OF_HELPURL;

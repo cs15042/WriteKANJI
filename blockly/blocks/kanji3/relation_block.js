@@ -7,7 +7,7 @@ Blockly.Blocks['relation'] = {
         .appendField("画目の")
         .appendField(new Blockly.FieldDropdown([["交点","intersection"], ["間","between"]]), "option");
     this.setOutput(true, null);
-    this.setColour(280);
+    this.setColour(0);
  this.setTooltip("");
  this.setHelpUrl("");
   }
