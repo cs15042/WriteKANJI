@@ -50,19 +50,21 @@ Blockly.JavaScript['drawLine'] = function(block) {
     return;
   }
 
-  function cmpSameCheck(coordinate){
+  function cmpSameCheck(c){
+    cmp = 0;
+    same = 0;
   	for(var i=0; i<10; i++){
-  		if(coordinate[i] == "cmp"){
+  		if(c[i] == "cmp"){
   			cmp = i+1;
   		}
-  		if(coordinate[i] == "same"){
+  		if(c[i] == "same"){
   			same = i+1;
   		}
   	}
     return;
   }
 
-  function defineLength(coordinate){
+  function defineLength(){
     cmpSameCheck(coordinate);
     switch(lineType){
       case "horizontal_line":
@@ -91,17 +93,67 @@ Blockly.JavaScript['drawLine'] = function(block) {
     }    
   }
 
+  function defineLengthAdd(){
+    var result;
+    cmpSameCheck(coordinate2);
+    switch(lineType){
+      case "horizontal_line":
+      case "vertical_line":
+        result = 150 + (rand*100);
+        break;
+      case "long_horizontal_line":
+      case "long_vertical_line":
+        if(cmp>0){
+          result = Number(coordinate2[cmp])*1.3;
+        }else{
+          result = 250 + (rand*100);
+        }
+        break;
+      case "short_horizontal_line":
+      case "short_vertical_line":
+        if(cmp>0){
+          result = Number(coordinate2[cmp])*0.7;
+        }else{
+          result = 50 + (rand*100);
+        }
+        break;      
+    }
+    if(same>0){
+      result = Number(coordinate2[same]);
+    }
+    return result;
+  }
+
   function atThrough(){
     var mul;
-    var x, y;
+    var ax, ay, bx, by;
     var dx, dy;
-    x = Number(coordinate[1]);
-    y = Number(coordinate[2]);
-    
-    if(coordinate[0] == "at"){
+    var x, y;
+    ax = Number(coordinate[1]);
+    ay = Number(coordinate[2]);
+    bx = Number(coordinate[3]);
+    by = Number(coordinate[4]);
+
+    if(coordinate[0] == "at"){//～に
       mul = 0.5;
-    }else{
+    }else{//～と交わるように(coordinate[0] == "through")
       mul = rand*(0.9-0.1)+0.1;
+    }
+
+    if(bx){//n画目と交わるように
+      if(bx>ax){
+        x = ax+(bx-ax)*mul;
+      }else{
+        x = ax+(ax-bx)*mul;
+      }
+      if(by>ay){
+        y = ay+(by-ay)*mul;
+      }else{
+        y = ay+(ay-by)*mul;
+      }
+    }else{
+      x = ax;
+      y = ay;
     }
 
     switch(lineType){
@@ -122,15 +174,21 @@ Blockly.JavaScript['drawLine'] = function(block) {
         fx = x;
         break;
     }
-    if(coordinate[3] == "no"){//交わらないように(通らないように)
-      while(true){
-        noOption();
-        dx = tx-fx;
-        dy = ty-fy; 
-        if((y-fy)/(x-fx) != (dy/dx)){//線の傾きが一致しないから交わらない
-          break;
-        }else if( (fx<tx && (x<fx || tx<x)) || (tx<fx && (x<tx || fx<x)) ){//傾きは一致するけど交わらない
+    if(coordinate[5] == "no"){//交わらないように(通らないように)
+      if(bx){
+        while(judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
+          noOption();
+        }
+      }else{
+        while(true){
+          noOption();
+          dx = tx-fx;
+          dy = ty-fy; 
+          if((y-fy)/(x-fx) != (dy/dx)){//線の傾きが一致しないから交わらない
             break;
+          }else if( (fx<tx && (x<fx || tx<x)) || (tx<fx && (x<tx || fx<x)) ){//傾きは一致するけど交わらない
+            break;
+          }
         }
       }
     }
@@ -185,9 +243,85 @@ Blockly.JavaScript['drawLine'] = function(block) {
     return fx+","+fy+","+tx+","+ty;
   }
 
+
+  function judgeIentersected(ax, ay, bx, by, cx, cy, dx, dy){//二線分交差判定関数
+    var ta = (cx - dx) * (ay - cy) + (cy - dy) * (cx - ax);
+    var tb = (cx - dx) * (by - cy) + (cy - dy) * (cx - bx);
+    var tc = (ax - bx) * (cy - ay) + (ay - by) * (ax - cx);
+    var td = (ax - bx) * (dy - ay) + (ay - by) * (ax - dx);
+    return tc * td <= 0 && ta * tb <= 0;
+  }
+
+  function atThroughAdd(){
+    var mul;
+    var ax, ay, bx, by;
+    var dx, dy;
+    var x, y;
+    ax = Number(coordinate2[1]);
+    ay = Number(coordinate2[2]);
+    bx = Number(coordinate2[3]);
+    by = Number(coordinate2[4]);
+
+    if(coordinate2[0] == "at"){//～に
+      if(judgeIentersected(ax,ay,ax,ay,fx,fy,tx,ty)){
+        //do nothing
+      }else{
+
+      }
+    }else{//(coordinate2[0] == "through")
+      if(coordinate2[5] == "yes"){//～と交わるように
+        while(!judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
+          changeLength("longer");
+        }
+      }else{//交わらないように(通らないように)
+        while(judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
+          changeLength("shorter");
+        }
+      }
+    }
+
+    return fx+","+fy+","+tx+","+ty;
+  }
+
+  function changeLength(sel){
+    var cx, cy;
+    var dx, dy, ndx, ndy;
+    var newLength = length;
+
+    cx = (fx+tx)/2;
+    cy = (fy+ty)/2;
+
+    dx = tx-fx;
+    dy = fy-ty;
+
+    switch(sel){
+      case "longer":
+        newLength += 100;
+        break;
+      case "shorter":
+        newLength -= 100;
+        break;
+      default:
+        newLength = sel;
+        break;
+    }
+
+    ndx = (newLength*dx)/length;
+    ndy = (newLength*dy)/length;
+
+    fx = cx - ndx/2;
+    fy = cy + ndy/2;
+    tx = cx + ndx/2;
+    ty = cy - ndy/2;
+
+    length = newLength;
+
+    return fx+","+fy+","+tx+","+ty;
+  }
+
   function addCondition(){//追加条件があるとき条件に合わせて線を調整する関数//未完成
     var line;
-    defineLength(coordinate2);//線の長さの決定
+    var newLength = defineLengthAdd();//線の長さの決定
     if(coordinate2[0] != "cmp" && coordinate2[0] != "same"){
       if(coordinate2[0] == "at" || coordinate2[0] == "through"){//～に，通るように，通らないように
         line = atThroughAdd();
@@ -197,7 +331,7 @@ Blockly.JavaScript['drawLine'] = function(block) {
         line = fromToAdd();
       }
     }else{//長さの変更のみの場合
-      line = fx+","+fy+","+tx+","+ty;
+      line = changeLength(newLength);
     }
     code = "drawLine("+line+");\n";
     drawLine(line);
@@ -207,7 +341,7 @@ Blockly.JavaScript['drawLine'] = function(block) {
   function draw(add){//線を描く本体関数
     var line;
     defineLineType();//線の種類の決定
-    defineLength(coordinate);//線の長さの決定
+    defineLength();//線の長さの決定
     if(value_option != "" && coordinate[0] != "cmp" && coordinate[0] != "same"){
       if(coordinate[0] == "at" || coordinate[0] == "through"){//～に，通るように，通らないように
         line = atThrough();
