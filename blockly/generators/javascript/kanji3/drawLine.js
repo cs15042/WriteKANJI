@@ -322,6 +322,7 @@ Blockly.JavaScript['drawLine'] = function(block) {
   function addCondition(){//追加条件があるとき条件に合わせて線を調整する関数//未完成
     var line;
     var newLength = defineLengthAdd();//線の長さの決定
+    changeLength(newLength);
     if(coordinate2[0] != "cmp" && coordinate2[0] != "same"){
       if(coordinate2[0] == "at" || coordinate2[0] == "through"){//～に，通るように，通らないように
         line = atThroughAdd();
