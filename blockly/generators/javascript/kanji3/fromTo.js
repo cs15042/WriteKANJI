@@ -8,23 +8,43 @@ Blockly.JavaScript['fromTo'] = function(block) {
   var fx, fy, tx, ty;
 
 
-  if(value_from == "up" || value_from == "down" || value_from == "right" || value_from == "left"){
+  if(value_from == "up" || value_from == "down" || value_from == "right" || value_from == "left" || value_from == "right_up" || value_from == "right_down" || value_from == "left_up" || value_from == "left_down" || value_from == "cUp" || value_from == "cDown" || value_from == "cRight" || value_from == "cLeft"){
     switch(value_from){
       case "up":
+      case "cUp":
         fx = 200;
         fy = 0;
         break;
       case "down":
+      case "cDwon":
         fx = 200;
         fy = 400;
         break;
       case "right":
+      case "cRight":
         fx = 400;
         fy = 200;
         break;
       case "left":
+      case "cLeft":
         fx = 0;
         fy = 200;
+        break;
+      case "right_up":
+        fx = 400;
+        fy = 0;
+        break;
+      case "right_down":
+        fx = 400;
+        fy = 400;
+        break;
+      case "left_up":
+        fx = 0;
+        fy = 0;
+        break;
+      case "left_down":
+        fx = 0;
+        fy = 400;
         break;
     }
     value_from = fx + "," + fy;

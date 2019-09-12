@@ -8,7 +8,9 @@ Blockly.JavaScript['through'] = function(block) {
   coordinate = (String(value_target)).split(",");
   x = Number(coordinate[0]);
   y = Number(coordinate[1]);
+  ax = Number(coordinate[2]);
+  ay = Number(coordinate[3]);
 
-  code = "through,"+x+","+y+","+dropdown_through;
+  code = "through,"+x+","+y+","+ax+","+ay+","+dropdown_through;
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

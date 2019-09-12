@@ -28,8 +28,11 @@
   <script src="../../blocks/kanji3/mod_block.js"></script>
   <script src="../../generators/javascript/kanji3/mod.js"></script>
 
+  <script src="../../blocks/kanji3/stroked2_block.js"></script>
+  <script src="../../generators/javascript/kanji3/stroked2.js"></script> 
+
   <script src="../../blocks/kanji3/stroked_block.js"></script>
-  <script src="../../generators/javascript/kanji3/stroked.js"></script> 
+  <script src="../../generators/javascript/kanji3/stroked.js"></script>
 
   <script src="../../blocks/kanji3/canvas_block.js"></script>
   <script src="../../generators/javascript/kanji3/canvas.js"></script>
@@ -66,25 +69,24 @@
         <div id="blocklyDiv" style="height: 800px; width: 1400px;"></div>
         <xml id="toolbox" style="display: none">
 		  
-		  <category name="動作">
+		  <category name="線を引く">
             <block type="drawLine"></block>
           </category>
 
           <category name="場所">
             <block type="canvas"></block>
             <block type="stroked"></block>
+            <block type="stroked2"></block>
             <block type="coordinate"></block>
             <block type="relation"></block>
             <block type="mod"></block>
           </category>
 
-          <category name="制約">
+          <category name="ルール">
             <block type="at"></block>
             <block type="through"></block>
             <block type="fromTo"></block>
-          </category>
 
-          <category name="線の長さ">
             <block type="compare"></block>
             <block type="sameLength"></block>
           </category>
@@ -213,7 +215,7 @@
       try{
         eval(code);
       }catch(e){
-        alert("エラーです.\n(" + e + ")");
+        //alert("エラーです.\n(" + e + ")");
       }
       run = false;
     } 
@@ -224,7 +226,7 @@
       	return;
       }
       if (arguments.length !== 4){
-        alert("[IllegalArgument:引数不正]エラーです.");
+        //alert("[IllegalArgument:引数不正]エラーです.");
       }
       
       context.beginPath();
