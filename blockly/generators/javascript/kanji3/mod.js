@@ -33,9 +33,9 @@ Blockly.JavaScript['mod'] = function(block) {
   var mod;
 
   if(dropdown_degree == "nomal"){
-    mod = 80;
-  }else{
     mod = 50;
+  }else{
+    mod = 20;
   }
 
   switch(dropdown_place){
