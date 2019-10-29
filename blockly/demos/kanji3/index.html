@@ -15,9 +15,9 @@
   <script src="../../blocks_compressed.js"></script>
   <script src="../../javascript_compressed.js"></script>
   <script src="../../msg/js/ja.js"></script>
-  
-  <script src="../../blocks/kanji3/drawLine_block.js"></script>
-  <script src="../../generators/javascript/kanji3/drawLine.js"></script>
+
+  <script src="../../blocks/kanji3/drawLine2_block.js"></script>
+  <script src="../../generators/javascript/kanji3/drawLine2.js"></script>
 
   <script src="../../blocks/kanji3/fromTo_block.js"></script>
   <script src="../../generators/javascript/kanji3/fromTo.js"></script>
@@ -70,7 +70,7 @@
         <xml id="toolbox" style="display: none">
 		  
 		  <category name="線を引く">
-            <block type="drawLine"></block>
+            <block type="drawLine2"></block>
           </category>
 
           <category name="場所">
@@ -153,7 +153,7 @@
       }
     }
 
-    var run = false;
+    //var run = false;
 
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
@@ -211,20 +211,23 @@
           'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
       var code = Blockly.JavaScript.workspaceToCode(workspace);
       Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      run = true;
+      //run = true;
       try{
         eval(code);
+        console.log("---code---");
+        console.log(code);
+        console.log("-code end-");
       }catch(e){
         //alert("エラーです.\n(" + e + ")");
       }
-      run = false;
+      //run = false;
     } 
 
     function drawLine(fromX,fromY,toX,toY){
-      if(run == false){
+      /*if(run == false){
         log(fromX,fromY,toX,toY);
       	return;
-      }
+      }*/
       if (arguments.length !== 4){
         //alert("[IllegalArgument:引数不正]エラーです.");
       }
