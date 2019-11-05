@@ -5,7 +5,7 @@ Blockly.Blocks['at'] = {
     this.appendDummyInput()
         .appendField("に");
     this.setInputsInline(true);
-    this.setOutput(true, null);
+    this.setOutput(true, "first");
     this.setColour(120);
  this.setTooltip("");
  this.setHelpUrl("");

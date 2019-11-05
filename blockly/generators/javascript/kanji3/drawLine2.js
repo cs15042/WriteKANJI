@@ -129,7 +129,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     var mul;
     var ax, ay, bx, by;
     var dx, dy;
-    var x, y;
+    var x, y;//生成する線が必ず通る点
     ax = Number(coordinate[1]);
     ay = Number(coordinate[2]);
     bx = Number(coordinate[3]);
@@ -142,54 +142,40 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     }
 
     if(bx){//n画目と交わるように
-      if(bx>ax){
-        x = ax+(bx-ax)*mul;
-      }else{
-        x = ax+(ax-bx)*mul;
-      }
-      if(by>ay){
-        y = ay+(by-ay)*mul;
-      }else{
-        y = ay+(ay-by)*mul;
-      }
-    }else{
+    	do{
+				noOption();
+    	}while(!judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty));
+    }else{//点と交わるように
       x = ax;
       y = ay;
+      switch(lineType){
+	      case "horizontal_line":
+	      case "long_horizontal_line":
+	      case "short_horizontal_line":
+	        tx = x+(length*mul);
+	        fx = x-(length*(1-mul));
+	        ty = y;
+	        fy = y;
+	        break;
+	      case "vertical_line":
+	      case "long_vertical_line":
+	      case "short_vertical_line":
+	        ty = y+(length*mul);
+	        fy = y-(length*(1-mul));
+	        tx = x;
+	        fx = x;
+	        break;
+    	}
     }
-
-    switch(lineType){
-      case "horizontal_line":
-      case "long_horizontal_line":
-      case "short_horizontal_line":
-        tx = x+(length*mul);
-        fx = x-(length*(1-mul));
-        ty = y;
-        fy = y;
-        break;
-      case "vertical_line":
-      case "long_vertical_line":
-      case "short_vertical_line":
-        ty = y+(length*mul);
-        fy = y-(length*(1-mul));
-        tx = x;
-        fx = x;
-        break;
-    }
+    
     if(coordinate[5] == "no"){//交わらないように(通らないように)
-      if(bx){
+      if(bx){//n画目と交わらないように
         while(judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
           noOption();
         }
-      }else{
-        while(true){
-          noOption();
-          dx = tx-fx;
-          dy = ty-fy; 
-          if((y-fy)/(x-fx) != (dy/dx)){//線の傾きが一致しないから交わらない
-            break;
-          }else if( (fx<tx && (x<fx || tx<x)) || (tx<fx && (x<tx || fx<x)) ){//傾きは一致するけど交わらない
-            break;
-          }
+      }else{//ある点と交わらないように
+        while(judgeIentersected(ax,ay,ax,ay,fx,fy,tx,ty)){
+        	noOption();
         }
       }
     }
@@ -222,7 +208,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     return fx+","+fy+","+tx+","+ty;
   }
 
-  function noOption(){//if no target option or no option cmp and same
+  function noOption(){//キャンパス上のランダムな位置に線を生成する関数
     switch(lineType){
       case "horizontal_line":
       case "long_horizontal_line":
@@ -273,14 +259,14 @@ Blockly.JavaScript['drawLine2'] = function(block) {
       if(coordinate2[5] == "yes"){//～と交わるように
         while(!judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
           changeLength("longer");
+          console.log("longer");
         }
       }else{//交わらないように(通らないように)
-        while(judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
-          changeLength("shorter");
-        }
+      	while(judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
+	          changeLength("shorter");
+	      }
       }
     }
-
     return fx+","+fy+","+tx+","+ty;
   }
 
@@ -320,7 +306,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     return fx+","+fy+","+tx+","+ty;
   }
 
-  function drawBrushstroke(){
+  function drawBrushstroke(){//はね
     fx = tx;
     fy = ty;
     switch(dropdown_brushstroke){
@@ -355,7 +341,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     }else{//長さの変更のみの場合
       line = changeLength(newLength);
     }
-    return;
+    return line;
   }
 
   function draw(add){//線を描く本体関数
@@ -374,7 +360,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
       line = noOption();
     }
     if(add){
-      addCondition();
+      line = addCondition();
     }
     log(line);
     if(dropdown_brushstroke == "nomal"){
