@@ -6,8 +6,8 @@ Blockly.Blocks['through'] = {
  	   	.appendField("と")
         .appendField(new Blockly.FieldDropdown([["交わるように","yes"], ["交わらないように","no"]]), "through");
     this.setInputsInline(true);
-    this.setOutput(true, null);
-    this.setColour(120);
+    this.setOutput(true, "second");
+    this.setColour(180);
  this.setTooltip("");
  this.setHelpUrl("");
   }
