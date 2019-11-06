@@ -143,7 +143,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
 
     if(bx){//n画目と交わるように
     	do{
-				noOption();
+			noOption();
     	}while(!judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty));
     }else{//点と交わるように
       x = ax;
@@ -193,7 +193,8 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     dx = tx-fx;
     dy = ty-fy;
 
-    r = Math.sqrt((length**2)/((dx**2)+(dy**2)));
+    //r = Math.sqrt((length**2)/((dx**2)+(dy**2)));///////////////////累乗演算子はie11非対応！！！！！！////////////////////////////
+    r = Math.sqrt(Math.pow(length,2)/(Math.pow(dx,2)+Math.pow(dy,2)));
     tx = fx + r*dx;
     ty = fy + r*dy;
 
@@ -333,10 +334,6 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     if(coordinate2[0] != "cmp" && coordinate2[0] != "same"){
       if(coordinate2[0] == "at" || coordinate2[0] == "through"){//～に，通るように，通らないように
         line = atThroughAdd();
-      }else if(coordinate2[0] == "d"){//～に向かって
-        line = towardsAdd();
-      }else{//～から～まで
-        line = fromToAdd();
       }
     }else{//長さの変更のみの場合
       line = changeLength(newLength);
