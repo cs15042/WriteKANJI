@@ -29,7 +29,8 @@ Blockly.JavaScript['sameLength'] = function(block) {
   dx = Math.abs(fx-tx);
   dy = Math.abs(fy-ty);
 
-  length = Math.sqrt((dx**2)+(dy**2));
+  //length = Math.sqrt((dx**2)+(dy**2));//累乗演算子使用禁止
+  length = Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2));
 
   if(value_target == ""){
   	code = "same," + length;
