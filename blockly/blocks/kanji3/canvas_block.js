@@ -1,7 +1,7 @@
 Blockly.Blocks['canvas'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("キャンバス");
+        .appendField("紙");
     this.setOutput(true, null);
     this.setColour(280);
  this.setTooltip("");

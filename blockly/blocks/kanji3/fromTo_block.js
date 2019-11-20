@@ -6,7 +6,7 @@ Blockly.Blocks['fromTo'] = {
         .setCheck(null)
         .appendField("から");
     this.appendDummyInput()
-        .appendField(new Blockly.FieldDropdown([["まで","until"], ["に向かって","towards"]]), "direction")
+        .appendField(new Blockly.FieldDropdown([["まで","until"], ["のほうへ","towards"]]), "direction")
     this.setInputsInline(true);
     this.setOutput(true, "first");
     this.setColour(120);

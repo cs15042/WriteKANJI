@@ -2,6 +2,7 @@ body{
   background-color: #fff;
   font-family: sans-serif;
   background-color: #d6eaff;
+  font-size: 25px;
 }
 h1{
   font-weight: normal;
@@ -21,7 +22,7 @@ a{
 	content:'';
 	display:block;
 }
-#btn-flat-border, #save{
+#btn-flat-border, #saveBlock, #saveLog{
 	position: relative;
 	display: inline-block;
 	padding: 0.3em 1em;
@@ -32,7 +33,7 @@ a{
 	border-radius: 3px;
 	transition: .4s;
 }
-#btn-flat-border:hover, #save:hover{
+#btn-flat-border:hover, #saveBlock:hover, #saveLog:hover{
 	background: #0000ff;
 	border: solid 2px #0000ff;
 }
