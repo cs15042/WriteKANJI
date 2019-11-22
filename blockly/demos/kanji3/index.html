@@ -54,8 +54,8 @@
 <body>
  <div class="relative" id ="main">
   <!--<h1>漢字を書こう</h1>-->
- <a id="saveLog" href="#" download="log.xml" onclick="LogOutput()">ログを保存</a>
- <!--<a id="saveBlock" href="#" download="savedBlock.xml" onclick="save()">ブロックを保存</a>
+ <a id="saveLog" href="#" download="log.xml" onclick="logOutput()">ログを保存</a>
+ <!--<a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
   <div class="originalFileBtn">
     ファイルから展開
     <input id="load" type="file" accept="text/xml">
@@ -108,35 +108,11 @@
   <!--<p>生成されたソースコード</p>
   <p id="program" />
   -->
+  <script src="workspace.js"></script>
   <script>
-  	var toolbox = document.getElementById("toolbox");
-		var options = {
-			toolbox : toolbox, 
-			collapse : true, 
-			comments : false, 
-			disable : false, 
-			maxBlocks : Infinity, 
-			trashcan : true, 
-			horizontalLayout : false, 
-			toolboxPosition : 'start', 
-			css : true, 
-			media : '../../media/', 
-			rtl : false, 
-			scrollbars : true, 
-			sounds : true, 
-			oneBasedIndex : true, 
-			zoom : {
-				controls : true, 
-				wheel : false, 
-				startScale : 1, 
-				maxScale : 3, 
-				minScale : 0.3, 
-				scaleSpeed : 1.2
-			}
-		};
-
     var xmlTextLog = "";
-    var saveCount = 0;
+    var strokeCount = 0;
+    var result;
 
     var workspace = Blockly.inject('blocklyDiv', options);
 
@@ -145,7 +121,7 @@
 	document.exitFullscreen = document.exitFullscreen || document.cancelFullScreen || document.mozCancelFullScreen || document.webkitCancelFullScreen || document.msExitFullscreen;
 
 
-    var count = 1;
+    var logCount = 1;
     var coordinateLog = new Array(50);
     for(var j = 0; j < 50; j++) {
       coordinateLog[j] = new Array(4);
@@ -153,8 +129,6 @@
         coordinateLog[j][i] = "-1";
       }
     }
-
-    //var run = false;
 
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
@@ -186,7 +160,8 @@
           coordinateLog[j][i] = "-1";
         }
       }
-      count = 1;
+      logCount = 1;
+      strokeCount = 0;
       clearCanvas();
     }
     
@@ -207,47 +182,44 @@
     function runCode(){
       // Generate JavaScript code and run it.
       //showCode();
-      autoSave();
       init();
       window.LoopTrap = 1000;
       Blockly.JavaScript.INFINITE_LOOP_TRAP =
           'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
       var code = Blockly.JavaScript.workspaceToCode(workspace);
       Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      //run = true;
       try{
         eval(code);
+        result = "SUCCESS";
         console.log("---code---");
         console.log(code);
         console.log("-code end-");
       }catch(e){
-        //alert("エラーです.\n(" + e + ")");
+        alert(e + "画目の文が分からないよ。");
+        result = "ERROR-" + strokeCount;
       }
-      //run = false;
+      saveLog();
     } 
 
     function drawLine(fromX,fromY,toX,toY){
-      /*if(run == false){
-        log(fromX,fromY,toX,toY);
-      	return;
-      }*/
-      if (arguments.length !== 4){
-        //alert("[IllegalArgument:引数不正]エラーです.");
+      strokeCount++;
+      if(isNaN(fromX+fromY+toX+toY)){//Number.isNaNはie非対応・・・悲しいね・・・
+        throw new Error(strokeCount);
+      }else{
+        context.beginPath();
+        context.moveTo(fromX,fromY);
+        context.lineTo(toX,toY);
+        context.stroke();  
       }
-      
-      context.beginPath();
-      context.moveTo(fromX,fromY);
-      context.lineTo(toX,toY);
-      context.stroke();
     }
 
     function log(fromX,fromY,toX,toY){
-      coordinateLog[count][0] = fromX;
-      coordinateLog[count][1] = fromY;
-      coordinateLog[count][2] = toX;
-      coordinateLog[count][3] = toY;
-      console.log("stroke" + count + ": " + coordinateLog[count]);
-      count++;
+      coordinateLog[logCount][0] = fromX;
+      coordinateLog[logCount][1] = fromY;
+      coordinateLog[logCount][2] = toX;
+      coordinateLog[logCount][3] = toY;
+      console.log("stroke" + logCount + ": " + coordinateLog[logCount]);
+      logCount++;
     }
 
     function clearCanvas(){
@@ -255,7 +227,7 @@
       console.log("--clear canvas--");
     }
 
-    function save(){
+    function blockOutput(){
       var xmlDom = Blockly.Xml.workspaceToDom(workspace);
       var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
       var blob = new Blob([xmlText], { "type" : "text/xml" });
@@ -266,20 +238,30 @@
       }
     }
 
-    function autoSave(){
-			var date_obj = new Date();
-      var xmlDom = Blockly.Xml.workspaceToDom(workspace);
-	  	xmlTextLog = xmlTextLog + date_obj.toString() + "\n" + Blockly.Xml.domToPrettyText(xmlDom) + "\n\n\n";
-	  	saveCount++;
+    function saveLog(){
+			var time = getTime();
+    	var xmlDom = Blockly.Xml.workspaceToDom(workspace);
+	  	xmlTextLog = xmlTextLog + time.toString() + "_" + result + "\n" + Blockly.Xml.domToPrettyText(xmlDom) + "\n";
     }
 
-    function LogOutput(){
+    function logOutput(){
 			var blob = new Blob([xmlTextLog], { "type" : "text/xml" });
       if(window.navigator.msSaveBlob){ 
         window.navigator.msSaveBlob(blob, "log.xml");  
       }else{
         document.getElementById("saveLog").href = window.URL.createObjectURL(blob);
       }
+    }
+
+    function getTime(){
+      var dt = new Date();
+      var year = dt.getFullYear();
+      var month = dt.getMonth()+1;
+      var date = dt.getDate();
+      var hours = dt.getHours();
+      var minutes = dt.getMinutes();
+      var seconds = dt.getSeconds();
+      return year +"-"+ month +"-"+ date +"_"+ hours +"h"+ minutes +"m"+ seconds +"s";
     }
 
   </script>

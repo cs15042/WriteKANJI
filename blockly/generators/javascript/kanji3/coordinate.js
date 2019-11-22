@@ -1,6 +1,7 @@
 Blockly.JavaScript['coordinate'] = function(block) {
   var value_option = Blockly.JavaScript.valueToCode(block, 'option', Blockly.JavaScript.ORDER_ATOMIC);
-  var dropdown_place = block.getFieldValue('place');
+  var dropdown_no = block.getFieldValue("no");
+  var dropdown_place = block.getFieldValue("place");
   var code;
   var place;
   var fx,fy,tx,ty;
@@ -11,7 +12,11 @@ Blockly.JavaScript['coordinate'] = function(block) {
     coordinate[i] = "-1";
   }
 
-  if(value_option == "canvas"){ 
+  if(value_option == "canvas"){
+    if(dropdown_no == "nashi"){
+      code = "error";
+      return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    }
     switch (dropdown_place){
       case "center":
         place = "200,200";
@@ -42,6 +47,10 @@ Blockly.JavaScript['coordinate'] = function(block) {
         break;
     }
   }else if(value_option == ""){// no option
+    if(dropdown_no == "no"){
+      code = "error";
+      return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    }
     switch (dropdown_place){
       case "center":
         place = "";
@@ -74,6 +83,10 @@ Blockly.JavaScript['coordinate'] = function(block) {
   }else if(value_option == "alert('存在しない線を指定しています')"){
     place = value_option;
   }else{//n画目の～
+    if(dropdown_no == "nashi"){
+      code = "error";
+      return [code, Blockly.JavaScript.ORDER_ATOMIC];
+    }
     coordinate = value_option.split(",");
     fx = Number(coordinate[0]);
     fy = Number(coordinate[1]);
@@ -94,7 +107,7 @@ Blockly.JavaScript['coordinate'] = function(block) {
           x = tx;
         }else{
         	code = "error";
-        	return;
+        	return [code, Blockly.JavaScript.ORDER_ATOMIC];
         }
         place = x+","+y;
         break;
@@ -107,7 +120,7 @@ Blockly.JavaScript['coordinate'] = function(block) {
           x = tx;
         }else{
         	code = "error";
-        	return;
+        	return [code, Blockly.JavaScript.ORDER_ATOMIC];
         }
         place = x+","+y;
         break;
@@ -120,7 +133,7 @@ Blockly.JavaScript['coordinate'] = function(block) {
           y = ty;
         }else{
         	code = "error";
-        	return;
+        	return [code, Blockly.JavaScript.ORDER_ATOMIC];
         }
         place = x+","+y;
         break;
@@ -139,7 +152,7 @@ Blockly.JavaScript['coordinate'] = function(block) {
           y = fy;
         }else{
         	code = "error";
-        	return;
+        	return [code, Blockly.JavaScript.ORDER_ATOMIC];
         }
         place = x+","+y;
         break;

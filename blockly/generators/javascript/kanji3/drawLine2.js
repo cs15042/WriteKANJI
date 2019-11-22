@@ -19,6 +19,10 @@ Blockly.JavaScript['drawLine2'] = function(block) {
   console.log("argument1:"+value_option);
   console.log("argument2:"+value_option2);
 
+  if(value_option == "error" || value_option2 == "error"){
+    return "drawLine(NaN,NaN,NaN,NaN)";
+  }
+
   if(value_option2 != ""){//AND条件がある場合
     draw(true);
   }else{//無い場合
@@ -233,6 +237,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
 
 
   function judgeIentersected(ax, ay, bx, by, cx, cy, dx, dy){//二線分交差判定関数
+    if(isNaN(ax+ay+bx+by+cx+cy+dx+dy));//どうしよう？保留
     var ta = (cx - dx) * (ay - cy) + (cy - dy) * (cx - ax);
     var tb = (cx - dx) * (by - cy) + (cy - dy) * (cx - bx);
     var tc = (ax - bx) * (cy - ay) + (ay - by) * (ax - cx);
@@ -249,6 +254,8 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     ay = Number(coordinate2[2]);
     bx = Number(coordinate2[3]);
     by = Number(coordinate2[4]);
+
+    if(isNaN(ax+ay+bx+by)) fx = NaN;//この関数内だけNaNを逃す可能性があるので，暫定的処理
 
     if(coordinate2[0] == "at"){//～に
       if(judgeIentersected(ax,ay,ax,ay,fx,fy,tx,ty)){
@@ -363,7 +370,7 @@ Blockly.JavaScript['drawLine2'] = function(block) {
     if(dropdown_brushstroke == "nomal"){
       code = "drawLine("+line+");\n";
     }else{
-      code = "drawLine("+line+");\n" + "drawLine("+drawBrushstroke()+");\n";
+      code = "drawLine("+line+");\n" + "drawLine("+drawBrushstroke()+");\nstrokeCount--;\n";
     }
     return;
   }

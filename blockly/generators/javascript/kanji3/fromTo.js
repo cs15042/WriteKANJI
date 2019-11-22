@@ -7,7 +7,6 @@ Blockly.JavaScript['fromTo'] = function(block) {
   var coordinate;
   var fx, fy, tx, ty;
 
-
   if(value_from == "cUp" || value_from == "cDown" || value_from == "cRight" || value_from == "cLeft"){
     switch(value_from){
       case "cUp":
@@ -28,8 +27,6 @@ Blockly.JavaScript['fromTo'] = function(block) {
         break;
     }
     value_from = fx + "," + fy;
-  }else if(value_from == "up" || value_from == "down" || value_from == "right" || value_from == "left" || value_from == "right_up" || value_from == "right_down" || value_from == "left_up" || value_from == "left_down"){
-    alert("hello");
   }
 
   if(value_to == "up" || value_to == "down" || value_to == "right" || value_to == "left" || value_to == "right_up" || value_to == "right_down" || value_to == "left_up" || value_to == "left_down" || value_to == "cUp" || value_to == "cDown" || value_to == "cRight" || value_to == "cLeft"){

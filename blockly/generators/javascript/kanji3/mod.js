@@ -5,10 +5,8 @@ Blockly.JavaScript['mod'] = function(block) {
 
   var x,y;
   var code;
-
-  var coordinate = value_target.split(",");
-  x = Number(coordinate[0]);
-  y = Number(coordinate[1]);
+  var coordinate;
+  var mod;
 
   switch(value_target){
     case "cUp":
@@ -26,11 +24,13 @@ Blockly.JavaScript['mod'] = function(block) {
     case "cLeft":
       x = 0;
       y = 200;
+      break;
     default:
+      coordinate = value_target.split(",");
+      x = Number(coordinate[0]);
+      y = Number(coordinate[1]);
       break;
   }
-
-  var mod;
 
   if(dropdown_degree == "nomal"){
     mod = 50;
@@ -70,6 +70,6 @@ Blockly.JavaScript['mod'] = function(block) {
   }
   code = x + "," + y;
 
-  // TODO: Change ORDER_NONE to the correct strength.
+  if(value_target == "error") code = "error";
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

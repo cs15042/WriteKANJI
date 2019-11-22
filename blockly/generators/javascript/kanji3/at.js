@@ -29,5 +29,6 @@ Blockly.JavaScript['at'] = function(block) {
   }
 
   code = "at,"+x+","+y;
+  //if(value_target == "error") code = "error";
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
