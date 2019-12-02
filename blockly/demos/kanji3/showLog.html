@@ -4,50 +4,146 @@
 	<meta charset="utf-8">
 	<meta name="author" content="cs15042">
 	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-	<meta name="apple-mobile-web-app-title" content="漢字を書こう！">
-	<title>漢字を書こう！(ログ表示ツール)</title>
+	<title>ログ表示ツール</title>
 	<link rel="icon" href="kanji.ico" />
 	<link rel="stylesheet" href="style.css">
 	<script src="../../jquery-3.2.1.min.js"></script>
+	<script src="../../blockly_compressed.js"></script>
+	<script src="../../blocks_compressed.js"></script>
+	<script src="../../javascript_compressed.js"></script>
+	<script src="../../msg/js/ja.js"></script>
+
+	<script src="../../blocks/kanji3/drawLine2_block.js"></script>
+	<script src="../../generators/javascript/kanji3/drawLine2.js"></script>
+
+	<script src="../../blocks/kanji3/fromTo_block.js"></script>
+	<script src="../../generators/javascript/kanji3/fromTo.js"></script>
+
+	<script src="../../blocks/kanji3/coordinate_block.js"></script>
+	<script src="../../generators/javascript/kanji3/coordinate.js"></script>
+
+	<script src="../../blocks/kanji3/mod_block.js"></script>
+	<script src="../../generators/javascript/kanji3/mod.js"></script> 
+
+	<script src="../../blocks/kanji3/stroked_block.js"></script>
+	<script src="../../generators/javascript/kanji3/stroked.js"></script>
+
+	<script src="../../blocks/kanji3/canvas_block.js"></script>
+	<script src="../../generators/javascript/kanji3/canvas.js"></script>
+
+	<script src="../../blocks/kanji3/relation_block.js"></script>
+	<script src="../../generators/javascript/kanji3/relation.js"></script>  
+
+	<script src="../../blocks/kanji3/at_block.js"></script>
+	<script src="../../generators/javascript/kanji3/at.js"></script>
+
+	<script src="../../blocks/kanji3/compare_block.js"></script>
+	<script src="../../generators/javascript/kanji3/compare.js"></script>
+
+	<script src="../../blocks/kanji3/sameLength_block.js"></script>
+	<script src="../../generators/javascript/kanji3/sameLength.js"></script>  
+
+	<script src="../../blocks/kanji3/through_block.js"></script>
+	<script src="../../generators/javascript/kanji3/through.js"></script>  
 </head>
 
 
 <body>
  <div class="relative" id ="main">
+	<!--<h1>漢字を書こう</h1>-->
 	<div class="originalFileBtn">
-		コードログを選択
-		<input id="load" type="file" accept="text/javascript">
+		ログファイルを選択
+		<input id="load" type="file" accept="text/xml">
 	</div>
-	ie非対応です．
 	<br><br>
-	<center>
-		<br><br><b>紙</b><br>
-		<canvas id="canvas" width="400px" height="400px">
-				図形を表示するには、canvasタグをサポートしたブラウザが必要です。
-		</canvas>
-		<p id ="time"></p>
-	</center>
+	<table>
+		<tr>
+			<td>
+				<div id="blocklyDiv" style="height: 800px; width: 1400px;"></div>
+				<xml id="toolbox" style="display: none">
+			
+			<category name="線を引く">
+						<block type="drawLine2"></block>
+					</category>
+
+					<category name="場所">
+						<block type="canvas"></block>
+						<block type="stroked"></block>
+						<block type="relation"></block>
+						<block type="coordinate"></block>
+						<block type="mod"></block>
+					</category>
+
+					<category name="ルール">
+						<block type="at"></block>
+						<block type="fromTo"></block>
+
+						<block type="through"></block>
+						<block type="compare"></block>
+						<block type="sameLength"></block>
+					</category>
+
+				</xml>
+			</td>
+			<td>&nbsp;&nbsp;</td>
+			<td>
+				<center>
+					<br><br><b id="fileName">ファイル名</b><br>
+					<p id="time">時刻</p>
+					<p id="result">結果</p>
+					<canvas id="canvas" width="400px" height="400px">
+							図形を表示するには、canvasタグをサポートしたブラウザが必要です。
+					</canvas>
+					<br>
+					<button onclick="toStart()"><<</button>
+					<button onclick="prev()">前へ</button>
+					<button onclick="next()">次へ</button>
+					<button onclick="toEnd()">>></button>
+					<p id="pageNum">0/0</p>
+				</center>
+			</td>
+		</tr>
+	</table>
  </div>
+	<!--<p>生成されたソースコード</p>
+	<p id="program" />
+	-->
+	<script src="workspace.js"></script>
 	<script>
-		var time = document.getElementById("time");
-		var obj1 = document.getElementById("load");
-		obj1.addEventListener("change",function(evt){
-			var file = evt.target.files;
-			var reader = new FileReader();
-			reader.readAsText(file[0]);
-			reader.onload = function(ev){
-				jsCodeLog = reader.result;
-				eval(jsCodeLog);
-			}
-		},false);
+		const time = 0;
+		const result = 1;
+		const block = 2;
+		const code = 3;
+
+		var log;
+		var current = 0;
+		var maxPageNum = 0;
+		var xmlDom;
+
+		var workspace = Blockly.inject('blocklyDiv', options);
 
 		var canvas = document.getElementById('canvas');
 		var context = canvas.getContext('2d');
 		context.fillStyle = 'rgb(255,255,255)';
 		context.fillRect(0,0,400,400);
 		context.lineWidth = 5;
+
+		var obj1 = document.getElementById("load");
+		obj1.addEventListener("change",function(evt){
+			var file = evt.target.files;
+			var reader = new FileReader();
+			reader.readAsText(file[0]);
+			document.getElementById("fileName").innerHTML = file[0].name;
+			reader.onload = function(ev){
+				xmlText = reader.result;
+				log = xmlText.split("<sp>");
+				for(var i=0; log[i] != ""; i++){
+					log[i] = log[i].split("*sp*");
+					maxPageNum++;
+				}
+				show(current);
+			}
+		},false);
 
 		function drawLine(fromX,fromY,toX,toY){
 			context.beginPath();
@@ -61,14 +157,41 @@
 			console.log("--clear canvas--");
 		}
 
-		function sleep(msec){
-			return new Promise(function(resolve){
-				setTimeout(function() {resolve()}, msec);
-			});
+		function prev(){
+			if(current > 0){
+				current--;
+				show(current);
+			}
 		}
 
-		async function wait(){
-			await sleep(1000);
+		function next(){
+			if(current+1 < maxPageNum){
+				current++;
+				show(current);
+			}
+		}
+
+		function toStart(){
+			current = 0;
+			show(current);
+		}
+
+		function toEnd(){
+			current = maxPageNum-1;
+			show(current);
+		}
+
+		function show(current){
+			xmlDom = Blockly.Xml.textToDom(log[current][block]);
+			if(xmlDom){
+				workspace.clear();
+				Blockly.Xml.domToWorkspace(xmlDom, workspace);
+			}
+			clearCanvas();
+			eval(log[current][code]);
+			document.getElementById("time").innerHTML = log[current][time];
+			document.getElementById("result").innerHTML = log[current][result];
+			document.getElementById("pageNum").innerHTML = current+1 + "/" + maxPageNum;
 		}
 
 	</script>

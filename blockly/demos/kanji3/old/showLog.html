@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html oncontextmenu="return false">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="cs15042">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="漢字を書こう！">
+	<title>漢字を書こう！(ログ表示ツール)</title>
+	<link rel="icon" href="kanji.ico" />
+	<link rel="stylesheet" href="style.css">
+	<script src="../../jquery-3.2.1.min.js"></script>
+</head>
+
+
+<body>
+ <div class="relative" id ="main">
+	<div class="originalFileBtn">
+		コードログを選択
+		<input id="load" type="file" accept="text/javascript">
+	</div>
+	ie非対応です．
+	<br><br>
+	<center>
+		<br><br><b>紙</b><br>
+		<canvas id="canvas" width="400px" height="400px">
+				図形を表示するには、canvasタグをサポートしたブラウザが必要です。
+		</canvas>
+		<p id ="time"></p>
+	</center>
+ </div>
+	<script>
+		var time = document.getElementById("time");
+		var obj1 = document.getElementById("load");
+		obj1.addEventListener("change",function(evt){
+			var file = evt.target.files;
+			var reader = new FileReader();
+			reader.readAsText(file[0]);
+			reader.onload = function(ev){
+				jsCodeLog = reader.result;
+				eval(jsCodeLog);
+			}
+		},false);
+
+		var canvas = document.getElementById('canvas');
+		var context = canvas.getContext('2d');
+		context.fillStyle = 'rgb(255,255,255)';
+		context.fillRect(0,0,400,400);
+		context.lineWidth = 5;
+
+		function drawLine(fromX,fromY,toX,toY){
+			context.beginPath();
+			context.moveTo(fromX,fromY);
+			context.lineTo(toX,toY);
+			context.stroke(); 
+		}
+
+		function clearCanvas(){
+			context.fillRect(0,0,400,400);
+			console.log("--clear canvas--");
+		}
+
+		function sleep(msec){
+			return new Promise(function(resolve){
+				setTimeout(function() {resolve()}, msec);
+			});
+		}
+
+		async function wait(){
+			await sleep(1000);
+		}
+
+	</script>
+</body>
+</html>

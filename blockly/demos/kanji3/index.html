@@ -55,8 +55,7 @@
  <div class="relative" id ="main">
 	<!--<h1>漢字を書こう</h1>-->
  <a id="saveLog" href="#" download="log.xml" onclick="logOutput()">ログを保存</a>
- <a id="saveCode" href="#" download="codeLog.js" onclick="codeOutput()">コードを保存</a>
- <!--<a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
+<!-- <a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
 	<div class="originalFileBtn">
 		ファイルから展開
 		<input id="load" type="file" accept="text/xml">
@@ -182,12 +181,12 @@
 				console.log("---code---");
 				console.log(code);
 				console.log("-code end-");
-				saveCode(code);
 			}catch(e){
 				alert(e + "画目の文がわからないよ。");
 				result = "ERROR-" + strokeCount;
 			}
-			saveLog(result);
+			//saveCode(code);
+			saveLog(code, result);
 		} 
 
 		function drawLine(fromX,fromY,toX,toY){
@@ -227,10 +226,10 @@
 			}
 		}
 
-		function saveLog(result){
+		function saveLog(code, result){
 			var time = getTime();
 			var xmlDom = Blockly.Xml.workspaceToDom(workspace);
-			xmlTextLog = xmlTextLog + time.toString() + "_" + result + "\n" + Blockly.Xml.domToPrettyText(xmlDom) + "\n";
+			xmlTextLog = xmlTextLog + time.toString() + "*sp*" + result + "\n*sp*" + Blockly.Xml.domToPrettyText(xmlDom) + "\n*sp*" + code + "<sp>";
 		}
 
 		function logOutput(){
@@ -242,23 +241,23 @@
 			}
 		}
 
-		function saveCode(code){
+		/*function saveCode(code){
 			var time = getTime();
 			if(jsCodeLog == ""){
 				jsCodeLog = "async function start(){\ntime.innerHTML = '" + time.toString() + "';\nclearCanvas();\n" + code + "await sleep(1000);\n\n}\nstart();";
 			}else{
 				jsCodeLog = jsCodeLog.slice(0,-10) + "time.innerHTML = '" + time.toString() + "';\nclearCanvas();\n" + code + "await sleep(1000);\n\n}\nstart();";
 			}
-		}
+		}*/
 
-		function codeOutput(){
+		/*function codeOutput(){
 			var blob = new Blob([jsCodeLog], { "type" : "text/javascript" });
 			if(window.navigator.msSaveBlob){
 				window.navigator.msSaveBlob(blob, "codeLog.js");  
 			}else{
 				document.getElementById("saveCode").href = window.URL.createObjectURL(blob);
 			}
-		}
+		}*/
 
 		function getTime(){
 			var dt = new Date();
