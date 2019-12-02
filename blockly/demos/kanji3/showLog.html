@@ -118,7 +118,6 @@
 		var log;
 		var current = 0;
 		var maxPageNum = 0;
-		var xmlDom;
 
 		var workspace = Blockly.inject('blocklyDiv', options);
 
@@ -134,6 +133,7 @@
 			var reader = new FileReader();
 			reader.readAsText(file[0]);
 			document.getElementById("fileName").innerHTML = file[0].name;
+			init();
 			reader.onload = function(ev){
 				xmlText = reader.result;
 				log = xmlText.split("<sp>");
@@ -144,6 +144,12 @@
 				show(current);
 			}
 		},false);
+
+		function init(){
+			log = "";
+			current = 0;
+			maxPageNum = 0;
+		}
 
 		function drawLine(fromX,fromY,toX,toY){
 			context.beginPath();
@@ -182,7 +188,7 @@
 		}
 
 		function show(current){
-			xmlDom = Blockly.Xml.textToDom(log[current][block]);
+			var xmlDom = Blockly.Xml.textToDom(log[current][block]);
 			if(xmlDom){
 				workspace.clear();
 				Blockly.Xml.domToWorkspace(xmlDom, workspace);
