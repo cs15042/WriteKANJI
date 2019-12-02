@@ -1,269 +1,276 @@
 <!DOCTYPE html>
 <html oncontextmenu="return false">
 <head>
-  <meta charset="utf-8">
-  <meta name="author" content="cs15042">
-  <meta name="viewport" content="width=device-width, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="漢字を書こう！">
-  <title>漢字を書こう！</title>
-  <link rel="icon" href="kanji.ico" />
-  <link rel="stylesheet" href="style.css">
-  <script src="../../jquery-3.2.1.min.js"></script>
-  <script src="../../blockly_compressed.js"></script>
-  <script src="../../blocks_compressed.js"></script>
-  <script src="../../javascript_compressed.js"></script>
-  <script src="../../msg/js/ja.js"></script>
+	<meta charset="utf-8">
+	<meta name="author" content="cs15042">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="漢字を書こう！">
+	<title>漢字を書こう！</title>
+	<link rel="icon" href="kanji.ico" />
+	<link rel="stylesheet" href="style.css">
+	<script src="../../jquery-3.2.1.min.js"></script>
+	<script src="../../blockly_compressed.js"></script>
+	<script src="../../blocks_compressed.js"></script>
+	<script src="../../javascript_compressed.js"></script>
+	<script src="../../msg/js/ja.js"></script>
 
-  <script src="../../blocks/kanji3/drawLine2_block.js"></script>
-  <script src="../../generators/javascript/kanji3/drawLine2.js"></script>
+	<script src="../../blocks/kanji3/drawLine2_block.js"></script>
+	<script src="../../generators/javascript/kanji3/drawLine2.js"></script>
 
-  <script src="../../blocks/kanji3/fromTo_block.js"></script>
-  <script src="../../generators/javascript/kanji3/fromTo.js"></script>
+	<script src="../../blocks/kanji3/fromTo_block.js"></script>
+	<script src="../../generators/javascript/kanji3/fromTo.js"></script>
 
-  <script src="../../blocks/kanji3/coordinate_block.js"></script>
-  <script src="../../generators/javascript/kanji3/coordinate.js"></script>
+	<script src="../../blocks/kanji3/coordinate_block.js"></script>
+	<script src="../../generators/javascript/kanji3/coordinate.js"></script>
 
-  <script src="../../blocks/kanji3/mod_block.js"></script>
-  <script src="../../generators/javascript/kanji3/mod.js"></script> 
+	<script src="../../blocks/kanji3/mod_block.js"></script>
+	<script src="../../generators/javascript/kanji3/mod.js"></script> 
 
-  <script src="../../blocks/kanji3/stroked_block.js"></script>
-  <script src="../../generators/javascript/kanji3/stroked.js"></script>
+	<script src="../../blocks/kanji3/stroked_block.js"></script>
+	<script src="../../generators/javascript/kanji3/stroked.js"></script>
 
-  <script src="../../blocks/kanji3/canvas_block.js"></script>
-  <script src="../../generators/javascript/kanji3/canvas.js"></script>
+	<script src="../../blocks/kanji3/canvas_block.js"></script>
+	<script src="../../generators/javascript/kanji3/canvas.js"></script>
 
-  <script src="../../blocks/kanji3/relation_block.js"></script>
-  <script src="../../generators/javascript/kanji3/relation.js"></script>  
+	<script src="../../blocks/kanji3/relation_block.js"></script>
+	<script src="../../generators/javascript/kanji3/relation.js"></script>  
 
-  <script src="../../blocks/kanji3/at_block.js"></script>
-  <script src="../../generators/javascript/kanji3/at.js"></script>
+	<script src="../../blocks/kanji3/at_block.js"></script>
+	<script src="../../generators/javascript/kanji3/at.js"></script>
 
-  <script src="../../blocks/kanji3/compare_block.js"></script>
-  <script src="../../generators/javascript/kanji3/compare.js"></script>
+	<script src="../../blocks/kanji3/compare_block.js"></script>
+	<script src="../../generators/javascript/kanji3/compare.js"></script>
 
-  <script src="../../blocks/kanji3/sameLength_block.js"></script>
-  <script src="../../generators/javascript/kanji3/sameLength.js"></script>  
+	<script src="../../blocks/kanji3/sameLength_block.js"></script>
+	<script src="../../generators/javascript/kanji3/sameLength.js"></script>  
 
-  <script src="../../blocks/kanji3/through_block.js"></script>
-  <script src="../../generators/javascript/kanji3/through.js"></script>  
+	<script src="../../blocks/kanji3/through_block.js"></script>
+	<script src="../../generators/javascript/kanji3/through.js"></script>  
 </head>
 
 
 <body>
  <div class="relative" id ="main">
-  <!--<h1>漢字を書こう</h1>-->
+	<!--<h1>漢字を書こう</h1>-->
  <a id="saveLog" href="#" download="log.xml" onclick="logOutput()">ログを保存</a>
+ <a id="saveCode" href="#" download="codeLog.js" onclick="codeOutput()">コードを保存</a>
  <!--<a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
-  <div class="originalFileBtn">
-    ファイルから展開
-    <input id="load" type="file" accept="text/xml">
-  </div>-->
-  <br><br>
-  <table>
-    <tr>
-      <td>
-        <div id="blocklyDiv" style="height: 800px; width: 1400px;"></div>
-        <xml id="toolbox" style="display: none">
-		  
-		  <category name="線を引く">
-            <block type="drawLine2"></block>
-          </category>
+	<div class="originalFileBtn">
+		ファイルから展開
+		<input id="load" type="file" accept="text/xml">
+	</div>-->
+	<br><br>
+	<table>
+		<tr>
+			<td>
+				<div id="blocklyDiv" style="height: 800px; width: 1400px;"></div>
+				<xml id="toolbox" style="display: none">
+			
+			<category name="線を引く">
+						<block type="drawLine2"></block>
+					</category>
 
-          <category name="場所">
-            <block type="canvas"></block>
-            <block type="stroked"></block>
-            <block type="relation"></block>
-            <block type="coordinate"></block>
-            <block type="mod"></block>
-          </category>
+					<category name="場所">
+						<block type="canvas"></block>
+						<block type="stroked"></block>
+						<block type="relation"></block>
+						<block type="coordinate"></block>
+						<block type="mod"></block>
+					</category>
 
-          <category name="ルール">
-            <block type="at"></block>
-            <block type="fromTo"></block>
+					<category name="ルール">
+						<block type="at"></block>
+						<block type="fromTo"></block>
 
-            <block type="through"></block>
-            <block type="compare"></block>
-            <block type="sameLength"></block>
-          </category>
+						<block type="through"></block>
+						<block type="compare"></block>
+						<block type="sameLength"></block>
+					</category>
 
-        </xml>
-      </td>
-      <td>&nbsp;&nbsp;</td>
-      <td>
-      	<center>
-      		<a href="#" id="btn-flat-border" onclick="runCode()">書かせてみる</a>
-      		<br><br><b>紙</b><br>
-        	<canvas id="canvas" width="400px" height="400px">
-          		図形を表示するには、canvasタグをサポートしたブラウザが必要です。
-        	</canvas>
-        	<br>
-        	<a href="#" id="btn-flat-border" onclick="clearCanvas()">ぜんぶ消す</a>
-        </center>
-      </td>
-    </tr>
-  </table>
+				</xml>
+			</td>
+			<td>&nbsp;&nbsp;</td>
+			<td>
+				<center>
+					<a href="#" id="btn-flat-border" onclick="runCode()">書かせてみる</a>
+					<br><br><b>紙</b><br>
+					<canvas id="canvas" width="400px" height="400px">
+							図形を表示するには、canvasタグをサポートしたブラウザが必要です。
+					</canvas>
+					<br>
+					<a href="#" id="btn-flat-border" onclick="clearCanvas()">ぜんぶ消す</a>
+				</center>
+			</td>
+		</tr>
+	</table>
  </div>
-  <!--<p>生成されたソースコード</p>
-  <p id="program" />
-  -->
-  <script src="workspace.js"></script>
-  <script>
-    var xmlTextLog = "";
-    var strokeCount = 0;
-    var result;
+	<!--<p>生成されたソースコード</p>
+	<p id="program" />
+	-->
+	<script src="workspace.js"></script>
+	<script>
+		var xmlTextLog = "";
+		var jsCodeLog = "";
+		var strokeCount = 0;
 
-    var workspace = Blockly.inject('blocklyDiv', options);
+		var workspace = Blockly.inject('blocklyDiv', options);
 
-    var rootElement = document.documentElement;
+		var rootElement = document.documentElement;
 	rootElement.requestFullscreen = rootElement.requestFullscreen || rootElement.mozRequestFullScreen || rootElement.webkitRequestFullscreen || rootElement.msRequestFullscreen;
 	document.exitFullscreen = document.exitFullscreen || document.cancelFullScreen || document.mozCancelFullScreen || document.webkitCancelFullScreen || document.msExitFullscreen;
 
 
-    var logCount = 1;
-    var coordinateLog = new Array(50);
-    for(var j = 0; j < 50; j++) {
-      coordinateLog[j] = new Array(4);
-      for(var i = 0; i < 4; i++) {
-        coordinateLog[j][i] = "-1";
-      }
-    }
+		var logCount = 1;
+		var coordinateLog = new Array(50);
+		for(var j = 0; j < 50; j++) {
+			coordinateLog[j] = new Array(4);
+			for(var i = 0; i < 4; i++) {
+				coordinateLog[j][i] = "-1";
+			}
+		}
 
-    var canvas = document.getElementById('canvas');
-    var context = canvas.getContext('2d');
-    context.fillStyle = 'rgb(255,255,255)';
-    context.fillRect(0,0,400,400);
-    context.lineWidth = 5;
+		var canvas = document.getElementById('canvas');
+		var context = canvas.getContext('2d');
+		context.fillStyle = 'rgb(255,255,255)';
+		context.fillRect(0,0,400,400);
+		context.lineWidth = 5;
 
-    var obj1 = document.getElementById("load");
-    obj1.addEventListener("change",function(evt){
-      var file = evt.target.files;
-      var reader = new FileReader();
-      reader.readAsText(file[0]);
-      reader.onload = function(ev){
-        xmlText = reader.result;
-        try{
-          xmlDom = Blockly.Xml.textToDom(xmlText);
-        }catch(e){
-        }
-        if(xmlDom){
-          workspace.clear();
-          Blockly.Xml.domToWorkspace(xmlDom, workspace);
-        }
-      }
-    },false);
+		var obj1 = document.getElementById("load");
+		obj1.addEventListener("change",function(evt){
+			var file = evt.target.files;
+			var reader = new FileReader();
+			reader.readAsText(file[0]);
+			reader.onload = function(ev){
+				xmlText = reader.result;
+				try{
+					xmlDom = Blockly.Xml.textToDom(xmlText);
+				}catch(e){
+				}
+				if(xmlDom){
+					workspace.clear();
+					Blockly.Xml.domToWorkspace(xmlDom, workspace);
+				}
+			}
+		},false);
 
-    function init(){
-      for(var j = 0; j < 50; j++) {
-        for(var i = 0; i < 4; i++) {
-          coordinateLog[j][i] = "-1";
-        }
-      }
-      logCount = 1;
-      strokeCount = 0;
-      clearCanvas();
-    }
-    
-    function showCode(){
-      // Generate JavaScript code and display it.
-      init();
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
-      if (code == ""){
-        alert("ブロックがありません");
-      }else{
-        //document.getElementById("program").innerHTML = code;
-        eval(code);
-	      alert(code);
-      }
-    }
+		function init(){
+			for(var j = 0; j < 50; j++) {
+				for(var i = 0; i < 4; i++) {
+					coordinateLog[j][i] = "-1";
+				}
+			}
+			logCount = 1;
+			strokeCount = 0;
+			clearCanvas();
+		}
 
-    function runCode(){
-      // Generate JavaScript code and run it.
-      //showCode();
-      init();
-      window.LoopTrap = 1000;
-      Blockly.JavaScript.INFINITE_LOOP_TRAP =
-          'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
-      var code = Blockly.JavaScript.workspaceToCode(workspace);
-      Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
-      try{
-        eval(code);
-        result = "SUCCESS";
-        console.log("---code---");
-        console.log(code);
-        console.log("-code end-");
-      }catch(e){
-        alert(e + "画目の文が分からないよ。");
-        result = "ERROR-" + strokeCount;
-      }
-      saveLog();
-    } 
+		function runCode(){
+			// Generate JavaScript code and run it.
+			//showCode();
+			init();
+			var result;
+			window.LoopTrap = 1000;
+			Blockly.JavaScript.INFINITE_LOOP_TRAP =
+					'if (--window.LoopTrap == 0) throw "Infinite loop.";\n';
+			var code = Blockly.JavaScript.workspaceToCode(workspace);
+			Blockly.JavaScript.INFINITE_LOOP_TRAP = null;
+			try{
+				eval(code);
+				result = "SUCCESS";
+				console.log("---code---");
+				console.log(code);
+				console.log("-code end-");
+				saveCode(code);
+			}catch(e){
+				alert(e + "画目の文がわからないよ。");
+				result = "ERROR-" + strokeCount;
+			}
+			saveLog(result);
+		} 
 
-    function drawLine(fromX,fromY,toX,toY){
-      strokeCount++;
-      if(isNaN(fromX+fromY+toX+toY)){//Number.isNaNはie非対応・・・悲しいね・・・
-        throw new Error(strokeCount);
-      }else{
-        context.beginPath();
-        context.moveTo(fromX,fromY);
-        context.lineTo(toX,toY);
-        context.stroke();  
-      }
-    }
+		function drawLine(fromX,fromY,toX,toY){
+			strokeCount++;
+			if(isNaN(fromX+fromY+toX+toY)){//Number.isNaNはie非対応・・・悲しいね・・・
+				throw new Error(strokeCount);
+			}else{
+				context.beginPath();
+				context.moveTo(fromX,fromY);
+				context.lineTo(toX,toY);
+				context.stroke();  
+			}
+		}
 
-    function log(fromX,fromY,toX,toY){
-      coordinateLog[logCount][0] = fromX;
-      coordinateLog[logCount][1] = fromY;
-      coordinateLog[logCount][2] = toX;
-      coordinateLog[logCount][3] = toY;
-      console.log("stroke" + logCount + ": " + coordinateLog[logCount]);
-      logCount++;
-    }
+		function log(fromX,fromY,toX,toY){
+			coordinateLog[logCount][0] = fromX;
+			coordinateLog[logCount][1] = fromY;
+			coordinateLog[logCount][2] = toX;
+			coordinateLog[logCount][3] = toY;
+			console.log("stroke" + logCount + ": " + coordinateLog[logCount]);
+			logCount++;
+		}
 
-    function clearCanvas(){
-      context.fillRect(0,0,400,400);
-      console.log("--clear canvas--");
-    }
+		function clearCanvas(){
+			context.fillRect(0,0,400,400);
+			console.log("--clear canvas--");
+		}
 
-    function blockOutput(){
-      var xmlDom = Blockly.Xml.workspaceToDom(workspace);
-      var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-      var blob = new Blob([xmlText], { "type" : "text/xml" });
-      if(window.navigator.msSaveBlob){ 
-        window.navigator.msSaveBlob(blob, "savedBlock.xml");  
-      }else{
-        document.getElementById("saveBlock").href = window.URL.createObjectURL(blob);
-      }
-    }
+		function blockOutput(){
+			var xmlDom = Blockly.Xml.workspaceToDom(workspace);
+			var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+			var blob = new Blob([xmlText], { "type" : "text/xml" });
+			if(window.navigator.msSaveBlob){ 
+				window.navigator.msSaveBlob(blob, "savedBlock.xml");  
+			}else{
+				document.getElementById("saveBlock").href = window.URL.createObjectURL(blob);
+			}
+		}
 
-    function saveLog(){
+		function saveLog(result){
 			var time = getTime();
-    	var xmlDom = Blockly.Xml.workspaceToDom(workspace);
-	  	xmlTextLog = xmlTextLog + time.toString() + "_" + result + "\n" + Blockly.Xml.domToPrettyText(xmlDom) + "\n";
-    }
+			var xmlDom = Blockly.Xml.workspaceToDom(workspace);
+			xmlTextLog = xmlTextLog + time.toString() + "_" + result + "\n" + Blockly.Xml.domToPrettyText(xmlDom) + "\n";
+		}
 
-    function logOutput(){
+		function logOutput(){
 			var blob = new Blob([xmlTextLog], { "type" : "text/xml" });
-      if(window.navigator.msSaveBlob){ 
-        window.navigator.msSaveBlob(blob, "log.xml");  
-      }else{
-        document.getElementById("saveLog").href = window.URL.createObjectURL(blob);
-      }
-    }
+			if(window.navigator.msSaveBlob){
+				window.navigator.msSaveBlob(blob, "log.xml");  
+			}else{
+				document.getElementById("saveLog").href = window.URL.createObjectURL(blob);
+			}
+		}
 
-    function getTime(){
-      var dt = new Date();
-      var year = dt.getFullYear();
-      var month = dt.getMonth()+1;
-      var date = dt.getDate();
-      var hours = dt.getHours();
-      var minutes = dt.getMinutes();
-      var seconds = dt.getSeconds();
-      return year +"-"+ month +"-"+ date +"_"+ hours +"h"+ minutes +"m"+ seconds +"s";
-    }
+		function saveCode(code){
+			var time = getTime();
+			if(jsCodeLog == ""){
+				jsCodeLog = "async function start(){\ntime.innerHTML = '" + time.toString() + "';\nclearCanvas();\n" + code + "await sleep(1000);\n\n}\nstart();";
+			}else{
+				jsCodeLog = jsCodeLog.slice(0,-10) + "time.innerHTML = '" + time.toString() + "';\nclearCanvas();\n" + code + "await sleep(1000);\n\n}\nstart();";
+			}
+		}
 
-  </script>
+		function codeOutput(){
+			var blob = new Blob([jsCodeLog], { "type" : "text/javascript" });
+			if(window.navigator.msSaveBlob){
+				window.navigator.msSaveBlob(blob, "codeLog.js");  
+			}else{
+				document.getElementById("saveCode").href = window.URL.createObjectURL(blob);
+			}
+		}
+
+		function getTime(){
+			var dt = new Date();
+			var year = dt.getFullYear();
+			var month = dt.getMonth()+1;
+			var date = dt.getDate();
+			var hours = dt.getHours();
+			var minutes = dt.getMinutes();
+			var seconds = dt.getSeconds();
+			return year +"-"+ month +"-"+ date +"_"+ hours +"h"+ minutes +"m"+ seconds +"s";
+		}
+
+	</script>
 </body>
 </html>
