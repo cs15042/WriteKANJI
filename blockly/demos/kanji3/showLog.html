@@ -53,7 +53,7 @@
 	<!--<h1>漢字を書こう</h1>-->
 	<div class="originalFileBtn">
 		ログファイルを選択
-		<input id="load" type="file" accept="text/xml">
+		<input id="load" type="file" accept=".log">
 	</div>
 	<br><br>
 	<table>
@@ -132,7 +132,7 @@
 			var file = evt.target.files;
 			var reader = new FileReader();
 			reader.readAsText(file[0]);
-			document.getElementById("fileName").innerHTML = file[0].name;
+			document.getElementById("fileName").innerHTML = file[0].name.slice(0,-4);
 			init();
 			reader.onload = function(ev){
 				xmlText = reader.result;
