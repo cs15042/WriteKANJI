@@ -54,8 +54,8 @@
 <body>
  <div class="relative" id ="main">
 	<!--<h1>漢字を書こう</h1>-->
- <a id="saveLog" href="#" download="log.xml" onclick="logOutput()">ログを保存</a>
-<!-- <a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
+ <a id="saveLog" href="#" download="operationHistory.log" onclick="logOutput()">ログを保存</a>
+ <!--<a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
 	<div class="originalFileBtn">
 		ファイルから展開
 		<input id="load" type="file" accept="text/xml">
@@ -233,9 +233,9 @@
 		}
 
 		function logOutput(){
-			var blob = new Blob([xmlTextLog], { "type" : "text/xml" });
+			var blob = new Blob([xmlTextLog], { "type" : "text/plain" });
 			if(window.navigator.msSaveBlob){
-				window.navigator.msSaveBlob(blob, "log.xml");  
+				window.navigator.msSaveBlob(blob, "operationHistory.log"); 
 			}else{
 				document.getElementById("saveLog").href = window.URL.createObjectURL(blob);
 			}
@@ -267,7 +267,7 @@
 			var hours = dt.getHours();
 			var minutes = dt.getMinutes();
 			var seconds = dt.getSeconds();
-			return year +"-"+ month +"-"+ date +"_"+ hours +"h"+ minutes +"m"+ seconds +"s";
+			return year +"/"+ month +"/"+ date +" "+ hours +"h"+ minutes +"m"+ seconds +"s";
 		}
 
 	</script>
