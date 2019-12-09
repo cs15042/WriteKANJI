@@ -97,8 +97,9 @@
 					<br>
 					<input id="slider" type="range" value="0" min="0" max="0" step="1" oninput="current=this.value-1;show(current);" onchange="current=this.value-1;show(current);"><br>
 					<button onclick="toStart()">＜＜</button>
-					<button onclick="prev()">前へ</button>
-					<button onclick="next()">次へ</button>
+					<button onclick="prev()">＜</button>
+					<button id="player" onclick="play()">自動再生</button>
+					<button onclick="next()">＞</button>
 					<button onclick="toEnd()">＞＞</button>
 					<p id="pageNum">0/0</p>
 				</center>
@@ -119,6 +120,8 @@
 		var log;
 		var current;
 		var maxPageNum;
+		var re;
+		var run = false;
 
 		var workspace = Blockly.inject('blocklyDiv', options);
 
@@ -154,7 +157,6 @@
 			if(event.key === "Left" || event.key === "ArrowLeft") prev();
 			if(event.key === "Right" || event.key === "ArrowRight") next();
 		}
-
 
 		function init(){
 			log = "";
@@ -197,6 +199,27 @@
 			show(current);
 		}
 
+		function play(){
+			if(maxPageNum == undefined)return;
+			if(run){
+				run = false;
+				clearInterval(re);
+				document.getElementById("player").innerHTML = "自動再生";
+			}else{
+				run = true;
+				document.getElementById("player").innerHTML = "停止";
+				re = setInterval(function(){
+					next();
+					if(current+1 >= maxPageNum){　
+						clearInterval(re);
+						document.getElementById("player").innerHTML = "自動再生";
+						run = false;
+					}
+				}, 1000);	
+			}
+			
+		}
+
 		function show(pageNum){
 			var xmlDom = Blockly.Xml.textToDom(log[pageNum][block]);
 			if(xmlDom){
@@ -207,10 +230,6 @@
 			try{
 				eval(log[pageNum][code]);
 			}catch(e){
-				document.getElementById("time").innerHTML = log[pageNum][time];
-				document.getElementById("result").innerHTML = log[pageNum][result];
-				document.getElementById("slider").value = pageNum+1;
-				document.getElementById("pageNum").innerHTML = pageNum+1 + "/" + maxPageNum;
 			}
 			document.getElementById("time").innerHTML = log[pageNum][time];
 			document.getElementById("result").innerHTML = log[pageNum][result];
