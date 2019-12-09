@@ -55,7 +55,7 @@
  <div class="relative" id ="main">
 	<!--<h1>漢字を書こう</h1>-->
  <a id="saveLog" href="#" download="operationHistory.log" onclick="logOutput()">ログを保存</a>
- <!--<a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
+<!-- <a id="saveBlock" href="#" download="savedBlock.xml" onclick="blockOutput()">ブロックを保存</a>
 	<div class="originalFileBtn">
 		ファイルから展開
 		<input id="load" type="file" accept="text/xml">
@@ -182,10 +182,16 @@
 				console.log(code);
 				console.log("-code end-");
 			}catch(e){
-				alert(e + "画目の文がわからないよ。");
-				result = "ERROR-" + strokeCount;
+				e = e.toString().slice(7);
+				if(isNaN(e)){
+					alert("変なブロックが残っているよ。");
+					result = "ERROR-TrashRemains";
+
+				}else{
+					alert(strokeCount + "画目の文がわからないよ。");
+					result = "ERROR-" + strokeCount;
+				}
 			}
-			//saveCode(code);
 			saveLog(code, result);
 		} 
 

@@ -197,7 +197,14 @@
 				Blockly.Xml.domToWorkspace(xmlDom, workspace);
 			}
 			clearCanvas();
-			eval(log[pageNum][code]);
+			try{
+				eval(log[pageNum][code]);
+			}catch(e){
+				document.getElementById("time").innerHTML = log[pageNum][time];
+				document.getElementById("result").innerHTML = log[pageNum][result];
+				document.getElementById("slider").value = pageNum+1;
+				document.getElementById("pageNum").innerHTML = pageNum+1 + "/" + maxPageNum;
+			}
 			document.getElementById("time").innerHTML = log[pageNum][time];
 			document.getElementById("result").innerHTML = log[pageNum][result];
 			document.getElementById("slider").value = pageNum+1;

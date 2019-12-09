@@ -4,7 +4,7 @@ Blockly.JavaScript['stroked'] = function(block) {
 
   code = coordinateLog[Number(dropdown_num)];
   if(coordinateLog[Number(dropdown_num)][0] == "-1" || coordinateLog[Number(dropdown_num)][2] == "-1"){
-  	code = "alert('存在しない線を指定しています')";
+  	code = "NaN";
   }
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };

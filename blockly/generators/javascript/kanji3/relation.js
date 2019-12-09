@@ -26,7 +26,7 @@ Blockly.JavaScript['relation'] = function(block) {
   dy = Number(coordinate[3]);
 
   if(ax == -1 || cx == -1){
-    code = "alert('存在しない線を指定しています')";
+    code = "NaN";
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
   }
 
@@ -53,15 +53,15 @@ Blockly.JavaScript['relation'] = function(block) {
     py = ay+r*(by-ay);
 
     if(bunbo == 0){
-      code = "alert('2直線は平行です')";
+      code = "NaN";
       if(rTmp == 0 && sTmp == 0){
-        code = "alert('2直線は重なり合っています')";
+        code = "NaN";
       }
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
     }
 
     if(r > 1 || r < 0 || s > 1 || s < 0){
-    code = "alert('2直線は交わりません')";
+    code = "NaN";
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
     }
   }

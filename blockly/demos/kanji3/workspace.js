@@ -12,7 +12,7 @@ var options = {
 	css : true, 
 	media : '../../media/', 
 	rtl : false, 
-	scrollbars : true, 
+	scrollbars : false, 
 	sounds : true, 
 	oneBasedIndex : true, 
 	zoom : {
