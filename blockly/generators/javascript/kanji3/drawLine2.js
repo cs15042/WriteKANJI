@@ -267,14 +267,24 @@ Blockly.JavaScript['drawLine2'] = function(block) {
 
 			}
 		}else{//(coordinate2[0] == "through")
+			var loopCount = 0;
 			if(coordinate2[5] == "yes"){//～と交わるように
 				while(!judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
+					if(loopCount>100){
+						fx = NaN;
+						return;
+					}
 					changeLength("longer");
-					console.log("longer");
+					loopCount++;
 				}
 			}else{//交わらないように(通らないように)
 				while(judgeIentersected(ax,ay,bx,by,fx,fy,tx,ty)){
-						changeLength("shorter");
+					if(loopCount>100){
+						fx = NaN;
+						return;
+					}
+					changeLength("shorter");
+					loopCount++;
 				}
 			}
 		}

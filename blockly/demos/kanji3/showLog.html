@@ -154,8 +154,9 @@
 
 
 		window.document.onkeydown = function(event){
-			if(event.key === "Left" || event.key === "ArrowLeft") prev();
-			if(event.key === "Right" || event.key === "ArrowRight") next();
+			if(event.keyCode == 37) prev();
+			if(event.keyCode == 32) play();
+			if(event.keyCode == 39) next();
 		}
 
 		function init(){

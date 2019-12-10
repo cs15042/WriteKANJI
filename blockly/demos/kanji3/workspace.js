@@ -16,7 +16,7 @@ var options = {
 	sounds : true, 
 	oneBasedIndex : true, 
 	zoom : {
-		controls : true, 
+		controls : false, 
 		wheel : false, 
 		startScale : 1, 
 		maxScale : 3, 

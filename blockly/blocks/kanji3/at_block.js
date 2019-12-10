@@ -1,7 +1,7 @@
 Blockly.Blocks['at'] = {
   init: function() {
     this.appendValueInput("target")
-        .setCheck(["inside"]);
+        .setCheck(["inside", "canvas"]);
     this.appendDummyInput()
         .appendField("に");
     this.setInputsInline(true);
