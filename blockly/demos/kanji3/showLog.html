@@ -97,10 +97,14 @@
 					<br>
 					<input id="slider" type="range" value="0" min="0" max="0" step="1" oninput="current=this.value-1;show(current);" onchange="current=this.value-1;show(current);"><br>
 					<button onclick="toStart()">＜＜</button>
-					<button onclick="prev()">＜</button>
-					<button id="player" onclick="play()">自動再生</button>
-					<button onclick="next()">＞</button>
+					<button onclick="toPrev()">＜</button>
+					<button id="player" onclick="play()">再生</button>
+					<button onclick="toNext()">＞</button>
 					<button onclick="toEnd()">＞＞</button>
+					<br>
+					<button onclick="toPrevChange()">←前の変更</button>
+					<button id="player2" onclick="playChange()">変更のみ再生</button>
+					<button onclick="toNextChange()">次の変更→</button>
 					<p id="pageNum">0/0</p>
 				</center>
 			</td>
@@ -122,6 +126,7 @@
 		var maxPageNum;
 		var re;
 		var run = false;
+		var run2 = false;
 
 		var workspace = Blockly.inject('blocklyDiv', options);
 
@@ -154,9 +159,9 @@
 
 
 		window.document.onkeydown = function(event){
-			if(event.keyCode == 37) prev();
+			if(event.keyCode == 37) toPrev();
 			if(event.keyCode == 32) play();
-			if(event.keyCode == 39) next();
+			if(event.keyCode == 39) toNext();
 		}
 
 		function init(){
@@ -176,14 +181,14 @@
 			context.fillRect(0,0,400,400);
 		}
 
-		function prev(){
+		function toPrev(){
 			if(current > 0){
 				current--;
 				show(current);
 			}
 		}
 
-		function next(){
+		function toNext(){
 			if(current+1 < maxPageNum){
 				current++;
 				show(current);
@@ -200,25 +205,62 @@
 			show(current);
 		}
 
+		function toPrevChange(){
+			if(current > 0){
+				do{
+					current--;
+				}while((log[current-1][block] == log[current][block]) && current > 0);
+				show(current);
+			}
+		}
+
+		function toNextChange(){
+			if(current+1 < maxPageNum){
+				do{
+					current++;
+				}while((log[current-1][block] == log[current][block]) && current+1 < maxPageNum);
+				show(current);
+			}
+		}
+
 		function play(){
-			if(maxPageNum == undefined)return;
+			if(maxPageNum == undefined || run2 == true)return;
 			if(run){
 				run = false;
 				clearInterval(re);
-				document.getElementById("player").innerHTML = "自動再生";
+				document.getElementById("player").innerHTML = "再生";
 			}else{
 				run = true;
 				document.getElementById("player").innerHTML = "停止";
 				re = setInterval(function(){
-					next();
-					if(current+1 >= maxPageNum){　
+					toNext();
+					if(current+1 >= maxPageNum){
 						clearInterval(re);
-						document.getElementById("player").innerHTML = "自動再生";
+						document.getElementById("player").innerHTML = "再生";
 						run = false;
 					}
 				}, 1000);	
 			}
-			
+		}
+
+		function playChange(){
+			if(maxPageNum == undefined || run == true)return;
+			if(run2){
+				run2 = false;
+				clearInterval(re);
+				document.getElementById("player2").innerHTML = "変更のみ再生";
+			}else{
+				run2 = true;
+				document.getElementById("player2").innerHTML = "停止";
+				re = setInterval(function(){
+					toNextChange();
+					if(current+1 >= maxPageNum){
+						clearInterval(re);
+						document.getElementById("player2").innerHTML = "変更のみ再生";
+						run2 = false;
+					}
+				}, 1000);	
+			}
 		}
 
 		function show(pageNum){
